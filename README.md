@@ -6,7 +6,7 @@ A lib for **[BotArcApi](https://github.com/TheSnowfield/BotArcAPI)** with **Type
 
 Install this package is very easy.
 ```
-npm i botarcapi
+npm i botarcapi_lib
 ```
 
 ## Usage
@@ -22,20 +22,20 @@ Follow the steps below:
 
 3. Choose a **BotArcApi** version you like, such as `v4`, then input codes below in your project:
    ```typescript
-   import { BotArcApiV4 } from "@botarcapi/lib"
+   import { BotArcApiV4 } from "botarcapi_lib"
    const api = new BotArcApiV4("http://localhost:8088", 60000)
    ```
 
    ...or maybe you are using **Node.js**:
 
    ```javascript
-   const { BotArcApiV4 } = require("@botarcapi/lib");
+   const { BotArcApiV4 } = require("botarcapi_lib");
    const api = new BotArcApiV4("http://localhost:8088", 60000)
    ```
    Otherwise, maybe you want to control other request config, so you can provide `AxiosRequestConfig`:
 
    ```typescript
-   import { BotArcApiV4 } from "@botarcapi/lib"
+   import { BotArcApiV4 } from "botarcapi_lib"
    const api = new BotArcApiV4({
        baseURL: "http://localhost:8088",
        timeout: 60000,
@@ -52,7 +52,7 @@ Follow the steps below:
 For example, you want to check the best 30 of **Nagiha0798** and print result to console, you can:
 
 ```typescript
-import { BotArcApiV4 } from "@botarcapi/lib"
+import { BotArcApiV4 } from "botarcapi_lib"
 const api = new BotArcApiV4({
     baseURL: "http://localhost:8088",
     timeout: 60000,
@@ -68,7 +68,7 @@ api.user.best30("Nagiha0798", true)
 ...or you may like using **async/await**:
 
 ```typescript
-import { BotArcApiV4 } from "@botarcapi/lib"
+import { BotArcApiV4 } from "botarcapi_lib"
 const api = new BotArcApiV4({
     baseURL: "http://localhost:8088",
     timeout: 60000,

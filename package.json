@@ -1,5 +1,5 @@
 {
-  "name": "botarcapi",
+  "name": "botarcapi_lib",
   "version": "1.0.0",
   "description": "Lib for BotArcApi",
   "private": false,
