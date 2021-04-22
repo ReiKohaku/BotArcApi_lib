@@ -8,13 +8,70 @@ import {
     BotArcApiUserinfo
 } from "../types";
 
+class BotArcApiV3Arc {
+    private readonly axios: AxiosInstance
+
+    constructor(axios: AxiosInstance) {
+        this.axios = axios
+    }
+
+    public alloc(time?: number, clear?: boolean): Promise<{access_token: string, valid_time: number}> {
+        const axiosInstance = this.axios
+        return new Promise<{access_token: string, valid_time: number}>((resolve, reject) => {
+            axiosInstance({
+                method: "GET",
+                url: "v3/arc/alloc",
+                params: {
+                    time,
+                    clear
+                }
+            }).then((response: AxiosResponse) => {
+                const data = response.data as BotArcApiResponse
+                if (data.status === 0) resolve(data.content as {access_token: string, valid_time: number})
+                else reject(data.status || "undefined error occurred")
+            }).catch(reject)
+        })
+    }
+
+    public forward(token: string, method: "GET" | "get" | "POST" | "post", url: string, params: Record<string, any>) {
+        const axiosInstance = this.axios
+        return new Promise((resolve, reject) => {
+            axiosInstance({
+                method,
+                url: "v3/arc/forward" + url.startsWith("/") ? "" : "/" + url,
+                params,
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            }).then((response: AxiosResponse) => {
+                const data = response.data as BotArcApiResponse
+                if (data.status === 0) resolve(data.content)
+                else reject(data.status || "undefined error occurred")
+            }).catch(reject)
+        })
+    }
+
+    public recycle(token: string) {
+        const axiosInstance = this.axios
+        return new Promise((resolve, reject) => {
+            axiosInstance({
+                method: "GET",
+                url: "v3/arc/recycle",
+                params: {
+                    token
+                }
+            }).then((response: AxiosResponse) => {
+                const data = response.data as BotArcApiResponse
+                if (data.status === 0) resolve()
+                else reject(data.status || "undefined error occurred")
+            }).catch(reject)
+        })
+    }
+}
+
 class BotArcApiV3 {
     private readonly axios: AxiosInstance
-    public readonly arc: {
-        alloc: Function
-        forward: Function
-        recycle: Function
-    }
+    public readonly arc: BotArcApiV3Arc
 
     constructor(axiosConfig?: AxiosRequestConfig)
     constructor(baseURL?: string, timeout?: number)
@@ -32,55 +89,7 @@ class BotArcApiV3 {
         const axiosInstance = createAxiosInstance()
         this.axios = axiosInstance
 
-        this.arc = {
-            alloc: function (time?: number, clear?: boolean): Promise<{access_token: string, valid_time: number}> {
-                return new Promise<{access_token: string, valid_time: number}>((resolve, reject) => {
-                    axiosInstance({
-                        method: "GET",
-                        url: "v3/arc/alloc",
-                        params: {
-                            time,
-                            clear
-                        }
-                    }).then((response: AxiosResponse) => {
-                        const data = response.data as BotArcApiResponse
-                        if (data.status === 0) resolve(data.content as {access_token: string, valid_time: number})
-                        else reject(data.status || "undefined error occurred")
-                    }).catch(reject)
-                })
-            },
-            forward: function (token: string, method: "GET" | "get" | "POST" | "post", url: string, params: Record<string, any>) {
-                return new Promise((resolve, reject) => {
-                    axiosInstance({
-                        method,
-                        url: "v3/arc/forward" + url.startsWith("/") ? "" : "/" + url,
-                        params,
-                        headers: {
-                            "Authorization": "Bearer " + token
-                        }
-                    }).then((response: AxiosResponse) => {
-                        const data = response.data as BotArcApiResponse
-                        if (data.status === 0) resolve(data.content)
-                        else reject(data.status || "undefined error occurred")
-                    }).catch(reject)
-                })
-            },
-            recycle: function (token: string) {
-                return new Promise((resolve, reject) => {
-                    axiosInstance({
-                        method: "GET",
-                        url: "v3/arc/recycle",
-                        params: {
-                            token
-                        }
-                    }).then((response: AxiosResponse) => {
-                        const data = response.data as BotArcApiResponse
-                        if (data.status === 0) resolve()
-                        else reject(data.status || "undefined error occurred")
-                    }).catch(reject)
-                })
-            }
-        }
+        this.arc = new BotArcApiV3Arc(axiosInstance)
 
         return this
     }
