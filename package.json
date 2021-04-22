@@ -1,0 +1,35 @@
+{
+  "name": "botarcapi",
+  "version": "1.0.0",
+  "description": "Lib for BotArcApi",
+  "private": false,
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "tsc && node test",
+    "build": "tsc",
+    "release": "tsc && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ReiKohaku/BotArcApi_lib.git"
+  },
+  "keywords": [
+    "arcaea",
+    "bot",
+    "api"
+  ],
+  "author": "reikohaku",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ReiKohaku/BotArcApi_lib/issues"
+  },
+  "homepage": "https://github.com/ReiKohaku/BotArcApi_lib#readme"
+}

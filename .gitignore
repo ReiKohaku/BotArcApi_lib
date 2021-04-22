@@ -1,0 +1,22 @@
+# ---
+# IDE
+# ---
+.idea
+.vscode
+
+# -----
+# build
+# -----
+/build/
+
+# ----
+# Node
+# ----
+node_modules
+package-lock.json
+yarn.lock
+
+# ----
+# Test
+# ----
+/test/
