@@ -26,10 +26,17 @@
     "bot",
     "api"
   ],
-  "author": "reikohaku",
+  "author": {
+    "name": "ReiKohaku",
+	"email": "hbsjzjwj@gmail.com",
+	"url": "https://github.com/ReiKohaku"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ReiKohaku/BotArcApi_lib/issues"
   },
-  "homepage": "https://github.com/ReiKohaku/BotArcApi_lib#readme"
+  "homepage": "https://github.com/ReiKohaku/BotArcApi_lib#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
