@@ -202,9 +202,9 @@ class BotArcApiV4Song {
     }
 }
 
-type BotArcApiScoreWithSongInfo = BotArcApiScore & { songInfo: BotArcApiSonginfo }
-type BotArcApiUserinfoWithSongInfo = BotArcApiUserinfo & { recent_score?: Array<BotArcApiScoreWithSongInfo> }
-type BotArcApiUserbest30WithSongInfo = BotArcApiUserbest30 & { best30_list: Array<BotArcApiScoreWithSongInfo> }
+export type BotArcApiScoreWithSongInfo = BotArcApiScore & { songInfo: BotArcApiSonginfo }
+export type BotArcApiUserInfoWithSongInfo = BotArcApiUserinfo & { recent_score?: Array<BotArcApiScoreWithSongInfo> }
+export type BotArcApiUserBest30WithSongInfo = BotArcApiUserbest30 & { best30_list: Array<BotArcApiScoreWithSongInfo> }
 
 class BotArcApiV4Util {
     private readonly axios: AxiosInstance
@@ -284,20 +284,20 @@ class BotArcApiV4Util {
     }
 
     public userBest30(user: string, fuzzy: true, recent?: BotArcApiRecent): Promise<{
-        userInfo: BotArcApiUserinfoWithSongInfo,
-        userBest30: BotArcApiUserbest30WithSongInfo
+        userInfo: BotArcApiUserInfoWithSongInfo,
+        userBest30: BotArcApiUserBest30WithSongInfo
     }>
     public userBest30(usercode: string, fuzzy: false, recent?: BotArcApiRecent): Promise<{
-        userInfo: BotArcApiUserinfoWithSongInfo,
-        userBest30: BotArcApiUserbest30WithSongInfo
+        userInfo: BotArcApiUserInfoWithSongInfo,
+        userBest30: BotArcApiUserBest30WithSongInfo
     }>
     public userBest30(usercode: string, recent?: BotArcApiRecent): Promise<{
-        userInfo: BotArcApiUserinfoWithSongInfo,
-        userBest30: BotArcApiUserbest30WithSongInfo
+        userInfo: BotArcApiUserInfoWithSongInfo,
+        userBest30: BotArcApiUserBest30WithSongInfo
     }>
     public userBest30(usercode: string, fuzzy?: boolean | BotArcApiRecent, recent?: BotArcApiRecent): Promise<{
-        userInfo: BotArcApiUserinfoWithSongInfo,
-        userBest30: BotArcApiUserbest30WithSongInfo
+        userInfo: BotArcApiUserInfoWithSongInfo,
+        userBest30: BotArcApiUserBest30WithSongInfo
     }> {
         const api = this.api
         let userParam: string, recentParam: string, _recent: number;
@@ -350,10 +350,10 @@ class BotArcApiV4Util {
                 if (userBest30Response.result.status < 0) reject(userBest30Response.result.message)
                 else if (userInfoResponse.result.status < 0) reject(userInfoResponse.result.message)
                 else {
-                    const userInfo: BotArcApiUserinfoWithSongInfo =
-                        userInfoResponse.result.content as BotArcApiUserinfoWithSongInfo
-                    const userBest30: BotArcApiUserbest30WithSongInfo =
-                        userBest30Response.result.content as BotArcApiUserbest30WithSongInfo
+                    const userInfo: BotArcApiUserInfoWithSongInfo =
+                        userInfoResponse.result.content as BotArcApiUserInfoWithSongInfo
+                    const userBest30: BotArcApiUserBest30WithSongInfo =
+                        userBest30Response.result.content as BotArcApiUserBest30WithSongInfo
                     const songInfoList = response
                         .filter(i => i.id > 1 && i.result.status === 0)
                         .map(i => i.result.content) as Array<BotArcApiSonginfo>
