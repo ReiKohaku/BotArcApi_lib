@@ -9,6 +9,12 @@
   "engines": {
     "node": ">=12.0.0"
   },
+  "files": [
+    "README.md",
+    "package.json",
+    "tsconfig.json",
+    "build"
+  ],
   "directories": {
     "test": "test"
   },
