@@ -26,15 +26,15 @@ Follow the steps below:
    const { BotArcApiV4 } = BotArcApi
    const api = new BotArcApiV4("http://localhost:8088", 60000)
    ```
-```
    
-...or maybe you are using **Node.js**:
+   ...or maybe you are using **Node.js**:
    
    ```javascript
    const { BotArcApiV4 } = require("botarcapi_lib");
    const api = new BotArcApiV4("http://localhost:8088", 60000)
-```
-Otherwise, maybe you want to control other request config, so you can provide `AxiosRequestConfig`:
+   ```
+   
+   Otherwise, maybe you want to control other request config, so you can provide `AxiosRequestConfig`:
 
    ```typescript
    import BotArcApi from "botarcapi_lib"
@@ -45,7 +45,7 @@ Otherwise, maybe you want to control other request config, so you can provide `A
        headers: {
            "User-Agent": "SecretAPIUA"
        }
-})
+   })
    ```
 
 4. Use APIs you like.
