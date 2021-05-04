@@ -1,7 +1,7 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios"
 import {
     ArcaeaDifficulty,
-    BotArcApiUserinfo,
+    BotArcApiUserinfoV4,
     BotArcApiSonginfo,
     BotArcApiScore,
     BotArcApiUserbest30,
@@ -23,10 +23,10 @@ class BotArcApiV4User {
      * Search and return user info.
      * Use "recent" argument to get 0~7 recent score(s) of user.
      */
-    public info(user: string, fuzzy: true, recent?: BotArcApiRecent): Promise<BotArcApiUserinfo>
-    public info(usercode: string, fuzzy: false, recent?: BotArcApiRecent): Promise<BotArcApiUserinfo>
-    public info(usercode: string, recent?: BotArcApiRecent): Promise<BotArcApiUserinfo>
-    public info(usercode: string, fuzzy?: boolean | BotArcApiRecent, recent?: BotArcApiRecent): Promise<BotArcApiUserinfo> {
+    public info(user: string, fuzzy: true, recent?: BotArcApiRecent): Promise<BotArcApiUserinfoV4>
+    public info(usercode: string, fuzzy: false, recent?: BotArcApiRecent): Promise<BotArcApiUserinfoV4>
+    public info(usercode: string, recent?: BotArcApiRecent): Promise<BotArcApiUserinfoV4>
+    public info(usercode: string, fuzzy?: boolean | BotArcApiRecent, recent?: BotArcApiRecent): Promise<BotArcApiUserinfoV4> {
         const axiosInstance = this.axios
         let params: Record<string, any> = {}
         if (typeof fuzzy === "boolean") {
@@ -39,14 +39,14 @@ class BotArcApiV4User {
             const _recent = (typeof fuzzy === "number" && fuzzy >= 0 && fuzzy <= 7) ? fuzzy : 0
             if (_recent && _recent > 0) params.recent = _recent
         }
-        return new Promise<BotArcApiUserinfo>((resolve, reject) => {
+        return new Promise<BotArcApiUserinfoV4>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
                 url: "/v4/user/info",
                 params: params
             }).then((response: AxiosResponse) => {
                 const data = response.data as BotArcApiResponseV4
-                if (data.status === 0) resolve(data.content as BotArcApiUserinfo)
+                if (data.status === 0) resolve(data.content as BotArcApiUserinfoV4)
                 else {
                     reject(data.message || "undefined error occurred")
                 }
@@ -203,7 +203,7 @@ class BotArcApiV4Song {
 }
 
 export type BotArcApiScoreWithSongInfo = BotArcApiScore & { songInfo: BotArcApiSonginfo }
-export type BotArcApiUserInfoWithSongInfo = BotArcApiUserinfo & { recent_score?: Array<BotArcApiScoreWithSongInfo> }
+export type BotArcApiUserInfoV4WithSongInfo = BotArcApiUserinfoV4 & { recent_score?: Array<BotArcApiScoreWithSongInfo> }
 export type BotArcApiUserBest30WithSongInfo = BotArcApiUserbest30 & { best30_list: Array<BotArcApiScoreWithSongInfo> }
 
 class BotArcApiV4Util {
@@ -284,19 +284,19 @@ class BotArcApiV4Util {
     }
 
     public userBest30(user: string, fuzzy: true, recent?: BotArcApiRecent): Promise<{
-        userInfo: BotArcApiUserInfoWithSongInfo,
+        userInfo: BotArcApiUserInfoV4WithSongInfo,
         userBest30: BotArcApiUserBest30WithSongInfo
     }>
     public userBest30(usercode: string, fuzzy: false, recent?: BotArcApiRecent): Promise<{
-        userInfo: BotArcApiUserInfoWithSongInfo,
+        userInfo: BotArcApiUserInfoV4WithSongInfo,
         userBest30: BotArcApiUserBest30WithSongInfo
     }>
     public userBest30(usercode: string, recent?: BotArcApiRecent): Promise<{
-        userInfo: BotArcApiUserInfoWithSongInfo,
+        userInfo: BotArcApiUserInfoV4WithSongInfo,
         userBest30: BotArcApiUserBest30WithSongInfo
     }>
     public userBest30(usercode: string, fuzzy?: boolean | BotArcApiRecent, recent?: BotArcApiRecent): Promise<{
-        userInfo: BotArcApiUserInfoWithSongInfo,
+        userInfo: BotArcApiUserInfoV4WithSongInfo,
         userBest30: BotArcApiUserBest30WithSongInfo
     }> {
         const api = this.api
@@ -350,8 +350,8 @@ class BotArcApiV4Util {
                 if (userBest30Response.result.status < 0) reject(userBest30Response.result.message)
                 else if (userInfoResponse.result.status < 0) reject(userInfoResponse.result.message)
                 else {
-                    const userInfo: BotArcApiUserInfoWithSongInfo =
-                        userInfoResponse.result.content as BotArcApiUserInfoWithSongInfo
+                    const userInfo: BotArcApiUserInfoV4WithSongInfo =
+                        userInfoResponse.result.content as BotArcApiUserInfoV4WithSongInfo
                     const userBest30: BotArcApiUserBest30WithSongInfo =
                         userBest30Response.result.content as BotArcApiUserBest30WithSongInfo
                     const songInfoList = response

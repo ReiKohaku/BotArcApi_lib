@@ -47,7 +47,7 @@ export interface BotArcApiScore {
     rating: number
 }
 
-export interface BotArcApiUserinfo {
+export interface BotArcApiUserinfoV4 {
     user_id: number
     name: string
     recent_score?: BotArcApiScore[]
@@ -58,6 +58,20 @@ export interface BotArcApiUserinfo {
     is_char_uncapped: boolean
     is_char_uncapped_override: boolean
     is_mutual: boolean
+}
+
+export interface BotArcApiUserinfoV4 {
+    user_id: number
+    name: string
+    recent_score?: BotArcApiScore[]
+    character: number
+    join_date: number
+    rating: number
+    is_skill_sealed: boolean
+    is_char_uncapped: boolean
+    is_char_uncapped_override: boolean
+    is_mutual: boolean
+    code: string
 }
 
 export interface BotArcApiUserbest30 {

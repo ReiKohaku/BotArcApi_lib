@@ -5,7 +5,7 @@ import {
     BotArcApiScore,
     BotArcApiSonginfo,
     BotArcApiUserbest30,
-    BotArcApiUserinfo
+    BotArcApiUserinfoV4
 } from "../types";
 
 class BotArcApiV3Arc {
@@ -94,9 +94,9 @@ class BotArcApiV3 {
         return this
     }
 
-    userinfo(usercode: string, recent?: boolean): Promise<BotArcApiUserinfo> {
+    userinfo(usercode: string, recent?: boolean): Promise<BotArcApiUserinfoV4> {
         const axiosInstance = this.axios
-        return new Promise<BotArcApiUserinfo>((resolve, reject) => {
+        return new Promise<BotArcApiUserinfoV4>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
                 url: "/v3/userinfo",
@@ -106,7 +106,7 @@ class BotArcApiV3 {
                 }
             }).then((response: AxiosResponse) => {
                 const data = response.data as {status: number, content: unknown}
-                if (data.status === 0) resolve(data.content as BotArcApiUserinfo)
+                if (data.status === 0) resolve(data.content as BotArcApiUserinfoV4)
                 else {
                     reject(data.status || "undefined error occurred")
                 }
