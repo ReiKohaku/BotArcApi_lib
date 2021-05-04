@@ -218,22 +218,22 @@ class BotArcApiV4Util {
     /**
      * Get user/info, user/best, song/info of user/best, song/alias of user/best in one request
      */
-    public util_userBest(user: string, fuzzy: true, songname: string, difficulty?: ArcaeaDifficulty): Promise<{
+    public userBest(user: string, fuzzy: true, songname: string, difficulty?: ArcaeaDifficulty): Promise<{
         userBest: BotArcApiScore,
         songInfo: BotArcApiSonginfo,
         songAlias: Array<string>
     }>
-    public util_userBest(usercode: string, fuzzy: false, songname: string, difficulty?: ArcaeaDifficulty): Promise<{
+    public userBest(usercode: string, fuzzy: false, songname: string, difficulty?: ArcaeaDifficulty): Promise<{
         userBest: BotArcApiScore,
         songInfo: BotArcApiSonginfo,
         songAlias: Array<string>
     }>
-    public util_userBest(usercode: string, songname: string, difficulty?: ArcaeaDifficulty): Promise<{
+    public userBest(usercode: string, songname: string, difficulty?: ArcaeaDifficulty): Promise<{
         userBest: BotArcApiScore,
         songInfo: BotArcApiSonginfo,
         songAlias: Array<string>
     }>
-    public util_userBest(usercode: string, fuzzy: boolean | string, songname?: string | ArcaeaDifficulty, difficulty?: ArcaeaDifficulty): Promise<{
+    public userBest(usercode: string, fuzzy: boolean | string, songname?: string | ArcaeaDifficulty, difficulty?: ArcaeaDifficulty): Promise<{
         userBest: BotArcApiScore,
         songInfo: BotArcApiSonginfo,
         songAlias: Array<string>
