@@ -62,14 +62,14 @@ class BotArcApiV3Arc {
                 }
             }).then((response: AxiosResponse) => {
                 const data = response.data as BotArcApiResponse
-                if (data.status === 0) resolve()
+                if (data.status === 0) resolve(void 0)
                 else reject(data.status || "undefined error occurred")
             }).catch(reject)
         })
     }
 }
 
-class BotArcApiV3 {
+export class BotArcApiV3 {
     private readonly axios: AxiosInstance
     public readonly arc: BotArcApiV3Arc
 
@@ -229,5 +229,3 @@ class BotArcApiV3 {
         })
     }
 }
-
-export default BotArcApiV3

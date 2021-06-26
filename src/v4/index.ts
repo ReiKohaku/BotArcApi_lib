@@ -378,7 +378,7 @@ class BotArcApiV4Util {
     }
 }
 
-class BotArcApiV4 {
+export class BotArcApiV4 {
     private axios: AxiosInstance
     public readonly user: BotArcApiV4User
     public readonly song: BotArcApiV4Song
@@ -462,5 +462,3 @@ class BotArcApiV4 {
         })
     }
 }
-
-export default BotArcApiV4
