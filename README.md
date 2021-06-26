@@ -93,14 +93,18 @@ b30()
 
 This library integrates some practical functions.
 
-To use these functions, you should import at first:
+To use these functions, you should import command at first:
 
 ```typescript
-import BotArcApi from "botarcapi_lib"
-const {util} = BotArcApi
+import {
+  botArcApiDifficulty2DifficultyClass,
+  difficultyClass2String,
+  botArcApiDifficulty2String,
+  formatScore
+} from "botarcapi_lib"
 ```
 
-Then you may use functions with `util.<Function Name>`, or `const {<Function Name>} = util`.
+Then you may use functions you imported.
 
 ### botArcApiDifficulty2DifficultyClass
 
