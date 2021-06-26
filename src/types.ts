@@ -45,6 +45,9 @@ export interface BotArcApiScore {
     time_played: number
     modifier: number
     rating: number
+    character: number
+    is_skill_sealed: boolean
+    is_char_uncapped: boolean
 }
 
 export interface BotArcApiUserinfoV4 {
@@ -78,6 +81,7 @@ export interface BotArcApiUserbest30 {
     best30_avg: number
     recent10_avg: number
     best30_list: Array<BotArcApiScore>
+    best30_overflow: Array<BotArcApiScore>
 }
 
 export interface BotArcApiDifficultyClass {
@@ -108,7 +112,8 @@ export interface BotArcApiSonginfo {
     side: 0 | 1
     remote_dl: boolean
     world_unlock: boolean
-    data: number // 十位时间戳
+    date: number // 十位时间戳
+    version: string
     difficulties: Array<BotArcApiDifficultyClass>
 }
 

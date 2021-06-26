@@ -67,13 +67,11 @@ class BotArcApiV4User {
             if (fuzzy) params.user = usercode
             else params.usercode = usercode
             params.songname = songname
-            const _difficulty = (typeof difficulty === "number" && difficulty >= 0 && difficulty <= 3) ? difficulty : 2
-            params.difficulty = _difficulty
+            params.difficulty = (typeof difficulty === "number" && difficulty >= 0 && difficulty <= 3) ? difficulty : 2
         } else {
             params.usercode = usercode
             params.songname = fuzzy
-            const _difficulty = (typeof songname === "number" && songname >= 0 && songname <= 3) ? songname : 2
-            params.difficulty = _difficulty
+            params.difficulty = (typeof songname === "number" && songname >= 0 && songname <= 3) ? songname : 2
         }
         return new Promise<BotArcApiScore>((resolve, reject) => {
             axiosInstance({
@@ -158,12 +156,31 @@ class BotArcApiV4Song {
         })
     }
 
+    public id(songname: string): Promise<{ id: string }> {
+        const axiosInstance = this.axios
+        return new Promise<{id: string}>((resolve, reject) => {
+            axiosInstance({
+                method: "POST",
+                url: "/v4/song/id",
+                params: {
+                    songname
+                }
+            }).then((response: AxiosResponse) => {
+                const data = response.data as BotArcApiResponseV4
+                if (data.status === 0) resolve(data.content as { id: string })
+                else {
+                    reject(data.message || "undefined error occurred")
+                }
+            }).catch(reject)
+        })
+    }
+
     /**
      * Roll a song from a given difficulty range.
      */
-    public random(start?: number, end?: number): Promise<{ id: string, rating: number }> {
+    public random(start?: number, end?: number): Promise<{ id: string, rating_class: number }> {
         const axiosInstance = this.axios
-        return new Promise<{ id: string, rating: number }>((resolve, reject) => {
+        return new Promise<{ id: string, rating_class: number }>((resolve, reject) => {
             axiosInstance({
                 method: "POST",
                 url: "/v4/song/random",
@@ -173,7 +190,7 @@ class BotArcApiV4Song {
                 }
             }).then((response: AxiosResponse) => {
                 const data = response.data as BotArcApiResponseV4
-                if (data.status === 0) resolve(data.content as { id: string, rating: number })
+                if (data.status === 0) resolve(data.content as { id: string, rating_class: number })
                 else {
                     reject(data.message || "undefined error occurred")
                 }
@@ -194,6 +211,92 @@ class BotArcApiV4Song {
             }).then((response: AxiosResponse) => {
                 const data = response.data as BotArcApiResponseV4
                 if (data.status === 0) resolve(data.content as { rating: Array<BotArcApiRatingInfo> })
+                else {
+                    reject(data.message || "undefined error occurred")
+                }
+            }).catch(reject)
+        })
+    }
+}
+
+class BotArcApiV4Forward {
+    private readonly axios: AxiosInstance
+
+    constructor(axios: AxiosInstance) {
+        this.axios = axios
+    }
+
+    public alloc(time?: number, clear?: boolean): Promise<{ access_token: string, valid_time: number }> {
+        const axiosInstance = this.axios
+        return new Promise<{ access_token: string, valid_time: number }>((resolve, reject) => {
+            axiosInstance({
+                method: "POST",
+                url: "/v4/forward/alloc",
+                params: {
+                    time,
+                    clear
+                }
+            }).then((response: AxiosResponse) => {
+                const data = response.data as BotArcApiResponseV4
+                if (data.status === 0) resolve(data.content as { access_token: string, valid_time: number })
+                else {
+                    reject(data.message || "undefined error occurred")
+                }
+            }).catch(reject)
+        })
+    }
+
+    public forward(token: string, ...args: any): Promise<unknown> {
+        const axiosInstance = this.axios
+        return new Promise<unknown>((resolve, reject) => {
+            axiosInstance({
+                method: "POST",
+                url: "/v4/forward/forward",
+                params: {
+                    token,
+                    ...args
+                }
+            }).then((response: AxiosResponse) => {
+                const data = response.data as BotArcApiResponseV4
+                if (data.status === 0) resolve(data.content)
+                else {
+                    reject(data.message || "undefined error occurred")
+                }
+            }).catch(reject)
+        })
+    }
+
+    public recycle(token: string): Promise<void> {
+        const axiosInstance = this.axios
+        return new Promise<void>((resolve, reject) => {
+            axiosInstance({
+                method: "POST",
+                url: "/v4/forward/recycle",
+                params: {
+                    token
+                }
+            }).then((response: AxiosResponse) => {
+                const data = response.data as BotArcApiResponseV4
+                if (data.status === 0) resolve(void 0)
+                else {
+                    reject(data.message || "undefined error occurred")
+                }
+            }).catch(reject)
+        })
+    }
+
+    public feed(token: string): Promise<{ valid_time: number }> {
+        const axiosInstance = this.axios
+        return new Promise<{ valid_time: number }>((resolve, reject) => {
+            axiosInstance({
+                method: "POST",
+                url: "/v4/forward/feed",
+                params: {
+                    token
+                }
+            }).then((response: AxiosResponse) => {
+                const data = response.data as BotArcApiResponseV4
+                if (data.status === 0) resolve(data.content as { valid_time: number })
                 else {
                     reject(data.message || "undefined error occurred")
                 }
@@ -382,6 +485,7 @@ export class BotArcApiV4 {
     private axios: AxiosInstance
     public readonly user: BotArcApiV4User
     public readonly song: BotArcApiV4Song
+    public readonly forward: BotArcApiV4Forward
     public readonly util: BotArcApiV4Util
 
     constructor(axiosConfig?: AxiosRequestConfig)
@@ -401,6 +505,7 @@ export class BotArcApiV4 {
 
         this.user = new BotArcApiV4User(axiosInstance)
         this.song = new BotArcApiV4Song(axiosInstance)
+        this.forward = new BotArcApiV4Forward(axiosInstance)
         this.util = new BotArcApiV4Util(axiosInstance, this)
 
         return this
