@@ -121,7 +121,7 @@ class BotArcApiV5Song {
         const axiosInstance = this.axios
         return new Promise<BotArcApiSonginfoV5>((resolve, reject) => {
             axiosInstance({
-                method: "POST",
+                method: "GET",
                 url: "/song/info",
                 params: fuzzy ? { songname: str } : { songid: str }
             }).then((response: AxiosResponse) => {
@@ -140,7 +140,7 @@ class BotArcApiV5Song {
         const axiosInstance = this.axios
         return new Promise<{ alias: Array<string> }>((resolve, reject) => {
             axiosInstance({
-                method: "POST",
+                method: "GET",
                 url: "/song/alias",
                 params: fuzzy ? { songname: str } : { songid: str }
             }).then((response: AxiosResponse) => {
@@ -165,7 +165,7 @@ class BotArcApiV5Assets {
         const axiosInstance = this.axios
         return new Promise<ArrayBuffer>((resolve, reject) => {
             axiosInstance({
-                method: "POST",
+                method: "GET",
                 url: "/assets/char",
                 responseType: "arraybuffer",
                 params: { partner, awakened }
@@ -183,7 +183,7 @@ class BotArcApiV5Assets {
         const axiosInstance = this.axios
         return new Promise<ArrayBuffer>((resolve, reject) => {
             axiosInstance({
-                method: "POST",
+                method: "GET",
                 url: "/assets/icon",
                 responseType: "arraybuffer",
                 params: { partner, awakened }
@@ -203,7 +203,7 @@ class BotArcApiV5Assets {
         const axiosInstance = this.axios
         return new Promise<ArrayBuffer>((resolve, reject) => {
             axiosInstance({
-                method: "POST",
+                method: "GET",
                 url: "/assets/song",
                 responseType: "arraybuffer",
                 params: fuzzy ? { songname: str } : {songid: str}
