@@ -45,9 +45,6 @@ export interface BotArcApiScore {
     time_played: number
     modifier: number
     rating: number
-    character: number
-    is_skill_sealed: boolean
-    is_char_uncapped: boolean
 }
 
 export interface BotArcApiUserinfoV4 {
@@ -124,14 +121,14 @@ export interface BotArcApiRatingInfo {
     difficulty: BotArcApiDifficulty
 }
 
-export interface BotArcApiResponse {
+export interface BotArcApiResponse<T> {
     status: number
-    content?: unknown
+    content?: T
 }
 
-export interface BotArcApiResponseV4 {
+export interface BotArcApiResponseV4<T> {
     status: number
-    content?: unknown
+    content?: T
     message?: string
 }
 
@@ -141,7 +138,50 @@ export interface BotArcApiBatchRequest {
     endpoint: string
 }
 
-export interface BotArcApiBatchResponse {
+export interface BotArcApiBatchResponse<T> {
     id: number
-    result: BotArcApiResponseV4
+    result: BotArcApiResponseV4<T>
+}
+
+/* -------- BotArcApi V5 -------- */
+
+export interface BotArcApiUserinfoV5 {
+    code: string
+    user_id: number
+    name: string
+    character: number
+    join_date: number
+    rating: number
+    is_skill_sealed: boolean
+    is_char_uncapped: boolean
+    is_char_uncapped_override: boolean
+    is_mutual: boolean
+}
+
+export interface BotArcApiDifficultyClassV5 {
+    ratingClass: ArcaeaDifficulty
+    chartDesigner: string
+    jacketDesigner: string
+    jacketOverride: boolean
+    realrating: number
+}
+
+export interface BotArcApiSonginfoV5 {
+    id: string
+    title_localized: {
+        en: string
+        ja?: string
+        'zh-Hans'?: string
+        'zh-Hant'?: string
+    },
+    artist: string
+    bpm: string
+    bpm_base: number
+    set: string
+    side: 0 | 1
+    remote_dl: boolean
+    world_unlock: boolean
+    date: number // 十位时间戳
+    version: string
+    difficulties: Array<BotArcApiDifficultyClassV5>
 }

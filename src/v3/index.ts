@@ -26,8 +26,8 @@ class BotArcApiV3Arc {
                     clear
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse
-                if (data.status === 0) resolve(data.content as {access_token: string, valid_time: number})
+                const data = response.data as BotArcApiResponse<{access_token: string, valid_time: number}>
+                if (data.status === 0 && data.content) resolve(data.content)
                 else reject(data.status || "undefined error occurred")
             }).catch(reject)
         })
@@ -44,8 +44,8 @@ class BotArcApiV3Arc {
                     "Authorization": "Bearer " + token
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse
-                if (data.status === 0) resolve(data.content)
+                const data = response.data as BotArcApiResponse<unknown>
+                if (data.status === 0 && data.content) resolve(data.content)
                 else reject(data.status || "undefined error occurred")
             }).catch(reject)
         })
@@ -61,7 +61,7 @@ class BotArcApiV3Arc {
                     token
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse
+                const data = response.data as BotArcApiResponse<void>
                 if (data.status === 0) resolve(void 0)
                 else reject(data.status || "undefined error occurred")
             }).catch(reject)
@@ -157,8 +157,8 @@ export class BotArcApiV3 {
                     songname
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse
-                if (data.status === 0) resolve(data.content as BotArcApiSonginfo)
+                const data = response.data as BotArcApiResponse<BotArcApiSonginfo>
+                if (data.status === 0 && data.content) resolve(data.content)
                 else reject(data.status || "undefined error occurred")
             }).catch(reject)
         })
@@ -173,8 +173,8 @@ export class BotArcApiV3 {
                     songname
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse
-                if (data.status === 0) resolve(data.content as {id: string})
+                const data = response.data as BotArcApiResponse<{id: string}>
+                if (data.status === 0 && data.content) resolve(data.content)
                 else reject(data.status || "undefined error occurred")
             }).catch(reject)
         })
@@ -186,8 +186,8 @@ export class BotArcApiV3 {
                 method: "GET",
                 url: "v3/update"
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse
-                if (data.status === 0) resolve(data.content as {url: string, version: string})
+                const data = response.data as BotArcApiResponse<{url: string, version: string}>
+                if (data.status === 0 && data.content) resolve(data.content)
                 else reject(data.status || "undefined error occurred")
             }).catch(reject)
         })
@@ -206,8 +206,8 @@ export class BotArcApiV3 {
                     info
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse
-                if (data.status === 0) {
+                const data = response.data as BotArcApiResponse<{id: string, ratingClass: ArcaeaDifficulty, song_info?: BotArcApiSonginfo}>
+                if (data.status === 0 && data.content) {
                     if (info) resolve(data.content as {id: string, ratingClass: ArcaeaDifficulty, song_info: BotArcApiSonginfo})
                     else resolve(data.content as {id: string, ratingClass: ArcaeaDifficulty})
                 }
@@ -222,8 +222,8 @@ export class BotArcApiV3 {
                 method: "GET",
                 url: "v3/connect"
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse
-                if (data.status === 0) resolve(data.content as {key: string})
+                const data = response.data as BotArcApiResponse<{key: string}>
+                if (data.status === 0 && data.content) resolve(data.content)
                 else reject(data.status || "undefined error occurred")
             }).catch(reject)
         })
