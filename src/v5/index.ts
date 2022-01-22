@@ -90,15 +90,16 @@ class BotArcApiV5User {
     /**
      * Get user's 30 best scores.
      */
-    public best30(user: string, fuzzy: true, withSongInfo?: boolean): Promise<BotArcApiUserbest30 & { account_info: BotArcApiUserinfoV5, best30_songinfo: BotArcApiSonginfoV5[], best30_overflow_songinfo: BotArcApiSonginfoV5[] }>
-    public best30(usercode: string, fuzzy: false, withSongInfo?: boolean): Promise<BotArcApiUserbest30 & { account_info: BotArcApiUserinfoV5, best30_songinfo: BotArcApiSonginfoV5[], best30_overflow_songinfo: BotArcApiSonginfoV5[] }>
+    public best30(user: string, fuzzy: true, withSongInfo?: boolean, overflow?: number): Promise<BotArcApiUserbest30 & { account_info: BotArcApiUserinfoV5, best30_songinfo: BotArcApiSonginfoV5[], best30_overflow_songinfo: BotArcApiSonginfoV5[] }>
+    public best30(usercode: string, fuzzy: false, withSongInfo?: boolean, overflow?: number): Promise<BotArcApiUserbest30 & { account_info: BotArcApiUserinfoV5, best30_songinfo: BotArcApiSonginfoV5[], best30_overflow_songinfo: BotArcApiSonginfoV5[] }>
     public best30(usercode: string): Promise<BotArcApiUserbest30 & { account_info: BotArcApiUserinfoV5, best30_songinfo: BotArcApiSonginfoV5[], best30_overflow_songinfo: BotArcApiSonginfoV5[] }>
-    public best30(usercode: string, fuzzy?: boolean, withSongInfo?: boolean): Promise<BotArcApiUserbest30 & { account_info: BotArcApiUserinfoV5, best30_songinfo: BotArcApiSonginfoV5[], best30_overflow_songinfo: BotArcApiSonginfoV5[] }> {
+    public best30(usercode: string, fuzzy?: boolean, withSongInfo?: boolean, overflow?: number): Promise<BotArcApiUserbest30 & { account_info: BotArcApiUserinfoV5, best30_songinfo: BotArcApiSonginfoV5[], best30_overflow_songinfo: BotArcApiSonginfoV5[] }> {
         const axiosInstance = this.axios
         let params: Record<string, any> = {}
         if (fuzzy) params.user = usercode
         else params.usercode = usercode
         if (withSongInfo) params.withsonginfo = true
+        if (overflow) params.overflow = overflow
         return new Promise<BotArcApiUserbest30 & { account_info: BotArcApiUserinfoV5, best30_songinfo: BotArcApiSonginfoV5[], best30_overflow_songinfo: BotArcApiSonginfoV5[] }>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
