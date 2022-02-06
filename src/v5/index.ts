@@ -203,16 +203,20 @@ class BotArcApiV5Assets {
         })
     }
 
-    public song(songname: string, fuzzy: true): Promise<ArrayBuffer>
-    public song(songid: string, fuzzy: false): Promise<ArrayBuffer>
-    public song(str: string, fuzzy: boolean = true): Promise<ArrayBuffer> {
+    public song(songname: string, fuzzy: true, beyond?: boolean): Promise<ArrayBuffer>
+    public song(songid: string, fuzzy: false, beyond?: boolean): Promise<ArrayBuffer>
+    public song(str: string, fuzzy: boolean = true, beyond: boolean = false): Promise<ArrayBuffer> {
         const axiosInstance = this.axios
+        let params: Record<string, any> = {}
+        if (fuzzy) params.songname = str
+        else params.songid = str
+        if (beyond) params.difficulty = 3
         return new Promise<ArrayBuffer>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
                 url: "/assets/song",
                 responseType: "arraybuffer",
-                params: fuzzy ? { songname: str } : {songid: str}
+                params
             }).then((response: AxiosResponse<ArrayBuffer>) => {
                 const data = response.data
                 if (response.headers["content-type"].includes("application/json")) {
