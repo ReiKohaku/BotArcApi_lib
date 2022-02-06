@@ -6,7 +6,9 @@ import {
     BotArcApiScore,
     BotArcApiUserbest30,
     BotArcApiResponseV4,
-    BotArcApiRecent
+    BotArcApiRecent,
+    BotArcApiDifficultyRange,
+    BotArcApiRandomSong
 } from "../types"
 
 class BotArcApiV5User {
@@ -158,6 +160,31 @@ class BotArcApiV5Song {
             }).catch(reject)
         })
     }
+
+    public random(withSongInfo?: boolean): Promise<BotArcApiRandomSong>
+    public random(start?: BotArcApiDifficultyRange, withSongInfo?: boolean): Promise<BotArcApiRandomSong>
+    public random(start?: BotArcApiDifficultyRange, end?: BotArcApiDifficultyRange): Promise<BotArcApiRandomSong>
+    public random(start?: BotArcApiDifficultyRange, end?: BotArcApiDifficultyRange, withSongInfo?: boolean): Promise<BotArcApiRandomSong>
+    public random(start?: BotArcApiDifficultyRange | boolean, end?: BotArcApiDifficultyRange | boolean, withSongInfo?: boolean): Promise<BotArcApiRandomSong> {
+        const axiosInstance = this.axios
+        const params: Record<string, any> = {}
+        if ((typeof start === 'boolean' && start) || (typeof end === 'boolean' && end) || withSongInfo) params.withsonginfo = true
+        if (typeof start === 'string') params.start = start
+        if (typeof end === 'string') params.end = end
+        return new Promise<BotArcApiRandomSong>((resolve, reject) => {
+            axiosInstance({
+                method: "GET",
+                url: "/song/random",
+                params
+            }).then((response: AxiosResponse) => {
+                const data = response.data as BotArcApiResponseV4<BotArcApiRandomSong>
+                if (data.status === 0 && data.content) resolve(data.content)
+                else {
+                    reject(data.message || "undefined error occurred")
+                }
+            }).catch(reject)
+        })
+    }
 }
 
 class BotArcApiV5Assets {
@@ -203,16 +230,20 @@ class BotArcApiV5Assets {
         })
     }
 
-    public song(songname: string, fuzzy: true): Promise<ArrayBuffer>
-    public song(songid: string, fuzzy: false): Promise<ArrayBuffer>
-    public song(str: string, fuzzy: boolean = true): Promise<ArrayBuffer> {
+    public song(songname: string, fuzzy: true, beyond?: boolean): Promise<ArrayBuffer>
+    public song(songid: string, fuzzy: false, beyond?: boolean): Promise<ArrayBuffer>
+    public song(str: string, fuzzy: boolean = true, beyond: boolean = false): Promise<ArrayBuffer> {
         const axiosInstance = this.axios
+        let params: Record<string, any> = {}
+        if (fuzzy) params.songname = str
+        else params.songid = str
+        if (beyond) params.difficulty = 3
         return new Promise<ArrayBuffer>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
                 url: "/assets/song",
                 responseType: "arraybuffer",
-                params: fuzzy ? { songname: str } : {songid: str}
+                params
             }).then((response: AxiosResponse<ArrayBuffer>) => {
                 const data = response.data
                 if (response.headers["content-type"].includes("application/json")) {
@@ -257,7 +288,7 @@ export class BotArcApiV5 {
      */
     public connect(): Promise<string> {
         return new Promise<string>((resolve, reject) => {
-            axios({
+            this.axios({
                 method: "GET",
                 url: "/connect"
             }).then((response: AxiosResponse) => {
@@ -273,7 +304,7 @@ export class BotArcApiV5 {
      */
     public update(): Promise<{url: string, version: string}> {
         return new Promise<{url: string, version: string}>((resolve, reject) => {
-            axios({
+            this.axios({
                 method: "GET",
                 url: "/update"
             }).then((response: AxiosResponse) => {

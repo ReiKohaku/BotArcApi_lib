@@ -28,6 +28,7 @@ export enum ArcaeaGradeType {
     d
 }
 
+export type BotArcApiDifficultyRange = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '9p' | '10' | '10p' | '11'
 export type BotArcApiDifficulty = 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23
 export type BotArcApiRecent = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
 
@@ -184,4 +185,10 @@ export interface BotArcApiSonginfoV5 {
     date: number // 十位时间戳
     version: string
     difficulties: Array<BotArcApiDifficultyClassV5>
+}
+
+export interface BotArcApiRandomSong {
+    id: string
+    ratingClass?: number
+    songinfo: BotArcApiSonginfoV5
 }
