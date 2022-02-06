@@ -6,7 +6,9 @@ import {
     BotArcApiScore,
     BotArcApiUserbest30,
     BotArcApiResponseV4,
-    BotArcApiRecent
+    BotArcApiRecent,
+    BotArcApiDifficultyRange,
+    BotArcApiRandomSong
 } from "../types"
 
 class BotArcApiV5User {
@@ -151,6 +153,31 @@ class BotArcApiV5Song {
                 params: fuzzy ? { songname: str } : { songid: str }
             }).then((response: AxiosResponse) => {
                 const data = response.data as BotArcApiResponseV4<{ alias: Array<string> }>
+                if (data.status === 0 && data.content) resolve(data.content)
+                else {
+                    reject(data.message || "undefined error occurred")
+                }
+            }).catch(reject)
+        })
+    }
+
+    public random(withSongInfo?: boolean): Promise<BotArcApiRandomSong>
+    public random(start?: BotArcApiDifficultyRange, withSongInfo?: boolean): Promise<BotArcApiRandomSong>
+    public random(start?: BotArcApiDifficultyRange, end?: BotArcApiDifficultyRange): Promise<BotArcApiRandomSong>
+    public random(start?: BotArcApiDifficultyRange, end?: BotArcApiDifficultyRange, withSongInfo?: boolean): Promise<BotArcApiRandomSong>
+    public random(start?: BotArcApiDifficultyRange | boolean, end?: BotArcApiDifficultyRange | boolean, withSongInfo?: boolean): Promise<BotArcApiRandomSong> {
+        const axiosInstance = this.axios
+        const params: Record<string, any> = {}
+        if ((typeof start === 'boolean' && start) || (typeof end === 'boolean' && end) || withSongInfo) params.withsonginfo = true
+        if (typeof start === 'string') params.start = start
+        if (typeof end === 'string') params.end = end
+        return new Promise<BotArcApiRandomSong>((resolve, reject) => {
+            axiosInstance({
+                method: "GET",
+                url: "/song/random",
+                params
+            }).then((response: AxiosResponse) => {
+                const data = response.data as BotArcApiResponseV4<BotArcApiRandomSong>
                 if (data.status === 0 && data.content) resolve(data.content)
                 else {
                     reject(data.message || "undefined error occurred")
