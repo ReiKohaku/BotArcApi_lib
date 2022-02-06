@@ -288,7 +288,7 @@ export class BotArcApiV5 {
      */
     public connect(): Promise<string> {
         return new Promise<string>((resolve, reject) => {
-            axios({
+            this.axios({
                 method: "GET",
                 url: "/connect"
             }).then((response: AxiosResponse) => {
@@ -304,7 +304,7 @@ export class BotArcApiV5 {
      */
     public update(): Promise<{url: string, version: string}> {
         return new Promise<{url: string, version: string}>((resolve, reject) => {
-            axios({
+            this.axios({
                 method: "GET",
                 url: "/update"
             }).then((response: AxiosResponse) => {
