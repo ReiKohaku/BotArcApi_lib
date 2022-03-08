@@ -46,6 +46,8 @@ const errorStatusString = {
         "-18": "Update service unavailable",
         "-19": "Invalid partner",
         "-20": "File unavailable",
+        "-21": "Invalid range",
+        "-22": "Range of rating end smaller than its start",
         "-23": "Potential is below the threshold of querying best30 (7.0)",
         "-24": "Need to update arcaea, please contact maintainer",
         "-233": "Internal error occurred"
@@ -71,6 +73,8 @@ const errorStatusString = {
         "-18": "升级服务不可用",
         "-19": "无效的搭档",
         "-20": "文件不可用",
+        "-21": "无效的区间",
+        "-22": "评级区间的上界值小于下界值",
         "-23": "查询的Best 30低于潜力值阈值（7.0）",
         "-24": "服务端Arcaea需要升级，请联系维护人员",
         "-233": "发生了内部错误"
