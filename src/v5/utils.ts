@@ -19,8 +19,9 @@ export enum ErrorStatus {
     UPDATE_SERVICE_UNAVAILABLE = -18,
     INVALID_PARTNER = -19,
     FILE_UNAVAILABLE = -20,
-    INTERNAL_ERROR_OCCURRED = -23,
-    UNKNOWN_ERROR_OCCURRED = -233
+    POTENTIAL_BELOW_THE_THRESHOLD = -23,
+    NEED_TO_UPDATE_ARCAEA = -24,
+    INTERNAL_ERROR_OCCURRED = -233
 }
 
 const errorStatusString = {
@@ -45,8 +46,9 @@ const errorStatusString = {
         "-18": "Update service unavailable",
         "-19": "Invalid partner",
         "-20": "File unavailable",
-        "-23": "Internal error occurred",
-        "-233": "Unknown error occurred"
+        "-23": "Potential is below the threshold of querying best30 (7.0)",
+        "-24": "Need to update arcaea, please contact maintainer",
+        "-233": "Internal error occurred"
     },
     "zh-cn": {
         "-1": "无效的用户名或用户代码",
@@ -69,8 +71,9 @@ const errorStatusString = {
         "-18": "升级服务不可用",
         "-19": "无效的搭档",
         "-20": "文件不可用",
-        "-23": "发生了内部错误",
-        "-233": "发生了位置错误"
+        "-23": "查询的Best 30低于潜力值阈值（7.0）",
+        "-24": "服务端Arcaea需要升级，请联系维护人员",
+        "-233": "发生了内部错误"
     },
 }
 
