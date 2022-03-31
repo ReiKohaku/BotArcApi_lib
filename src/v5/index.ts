@@ -282,6 +282,7 @@ export class BotArcApiV5 {
 
     /**
      * The code in https://lowest.world/
+     * @deprecated
      */
     public connect(): Promise<string> {
         return new Promise<string>((resolve, reject) => {
