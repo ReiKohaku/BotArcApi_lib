@@ -159,36 +159,64 @@ export interface BotArcApiUserinfoV5 {
     is_mutual: boolean
 }
 
-export interface BotArcApiDifficultyClassV5 {
-    ratingClass: ArcaeaDifficulty
-    chartDesigner: string
-    jacketDesigner: string
-    jacketOverride: boolean
-    realrating: number
-}
-
-export interface BotArcApiSonginfoV5 {
-    id: string
-    title_localized: {
-        en: string
-        ja?: string
-        'zh-Hans'?: string
-        'zh-Hant'?: string
-    },
+export interface BotArcApiDifficultyInfoV5 {
+    name_en: string
+    name_jp: string
     artist: string
     bpm: string
     bpm_base: number
     set: string
+    set_friendly: string
+    time: number
     side: 0 | 1
-    remote_dl: boolean
     world_unlock: boolean
+    remote_download: boolean
+    bg: string
     date: number // 十位时间戳
     version: string
-    difficulties: Array<BotArcApiDifficultyClassV5>
+    difficulty: BotArcApiDifficulty
+    rating: number
+    note: number
+    chart_designer: string
+    jacket_designer: string
+    jacket_override: boolean
+    audio_override: boolean
 }
 
 export interface BotArcApiRandomSong {
     id: string
     ratingClass?: number
-    songinfo: BotArcApiSonginfoV5
+    songinfo: BotArcApiDifficultyInfoV5[]
+}
+
+export namespace BotArcApiContentV5 {
+    export namespace User {
+        export interface Info {
+            account_info: BotArcApiUserinfoV5,
+            recent_score: BotArcApiScore[],
+            songinfo: BotArcApiDifficultyInfoV5[]
+        }
+
+        export interface Best {
+            account_info: BotArcApiUserinfoV5,
+            record: BotArcApiScore,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+            songinfo: BotArcApiDifficultyInfoV5[]
+        }
+
+        export interface Best30 {
+            best30_avg: number
+            recent10_avg: number
+            account_info: BotArcApiUserinfoV5
+            best30_list: BotArcApiScore[]      // length: 30
+            best30_overflow: BotArcApiScore[]  // length: 10
+            best30_songinfo: BotArcApiDifficultyInfoV5[][]          // length: 30
+            best30_overflow_songinfo: BotArcApiDifficultyInfoV5[][] // length: 10
+            recent_score: BotArcApiScore
+            recent_songinfo: BotArcApiDifficultyInfoV5[]
+        }
+    }
+
+    export namespace Song {
+        export interface Random extends BotArcApiRandomSong {}
+    }
 }
