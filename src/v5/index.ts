@@ -1,14 +1,11 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios"
 import {
     ArcaeaDifficulty,
-    BotArcApiUserinfoV5,
-    BotArcApiSonginfoV5,
-    BotArcApiScore,
-    BotArcApiUserbest30,
     BotArcApiResponseV4,
     BotArcApiRecent,
     BotArcApiDifficultyRange,
-    BotArcApiRandomSong
+    BotArcApiContentV5,
+    BotArcApiDifficultyInfoV5,
 } from "../types"
 
 class BotArcApiV5User {
@@ -22,10 +19,10 @@ class BotArcApiV5User {
      * Search and return user info.
      * Use "recent" argument to get 0~7 recent score(s) of user.
      */
-    public info(user: string, fuzzy: true, recent?: BotArcApiRecent, withSongInfo?: boolean): Promise<{ account_info: BotArcApiUserinfoV5, recent_score: BotArcApiScore[], songinfo: BotArcApiSonginfoV5[] }>
-    public info(usercode: string, fuzzy: false, recent?: BotArcApiRecent, withSongInfo?: boolean): Promise<{ account_info: BotArcApiUserinfoV5, recent_score: BotArcApiScore[], songinfo: BotArcApiSonginfoV5[] }>
-    public info(usercode: string, recent?: BotArcApiRecent, withSongInfo?: boolean): Promise<{ account_info: BotArcApiUserinfoV5, recent_score: BotArcApiScore[], songinfo: BotArcApiSonginfoV5[] }>
-    public info(usercode: string, fuzzy?: boolean | BotArcApiRecent, recent?: boolean | BotArcApiRecent, withSongInfo?: boolean): Promise<{ account_info: BotArcApiUserinfoV5, recent_score: BotArcApiScore[], songinfo: BotArcApiSonginfoV5[] }> {
+    public info(user: string, fuzzy: true, recent?: BotArcApiRecent, withSongInfo?: boolean): Promise<BotArcApiContentV5.User.Info>
+    public info(usercode: string, fuzzy: false, recent?: BotArcApiRecent, withSongInfo?: boolean): Promise<BotArcApiContentV5.User.Info>
+    public info(usercode: string, recent?: BotArcApiRecent, withSongInfo?: boolean): Promise<BotArcApiContentV5.User.Info>
+    public info(usercode: string, fuzzy?: boolean | BotArcApiRecent, recent?: boolean | BotArcApiRecent, withSongInfo?: boolean): Promise<BotArcApiContentV5.User.Info> {
         const axiosInstance = this.axios
         let params: Record<string, any> = {}
         if (typeof fuzzy === "boolean") {
@@ -40,13 +37,13 @@ class BotArcApiV5User {
             if (_recent && _recent > 0) params.recent = _recent
             if (recent) params.withSongInfo = true
         }
-        return new Promise<{ account_info: BotArcApiUserinfoV5, recent_score: BotArcApiScore[], songinfo: BotArcApiSonginfoV5[] }>((resolve, reject) => {
+        return new Promise<BotArcApiContentV5.User.Info>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
                 url: "/user/info",
                 params: params
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<{ account_info: BotArcApiUserinfoV5, recent_score: BotArcApiScore[], songinfo: BotArcApiSonginfoV5[] }>
+                const data = response.data as BotArcApiResponseV4<BotArcApiContentV5.User.Info>
                 if (data.status === 0 && data.content) resolve(data.content)
                 else {
                     reject(data.message || "undefined error occurred")
@@ -58,10 +55,10 @@ class BotArcApiV5User {
     /**
      * Get one of user's best scores by user code, song name and difficulty.
      */
-    public best(user: string, fuzzy: true, songname: string, difficulty?: ArcaeaDifficulty, withSongInfo?: boolean): Promise<{ account_info: BotArcApiUserinfoV5, record: BotArcApiScore, songinfo: BotArcApiSonginfoV5[] }>
-    public best(usercode: string, fuzzy: false, songname: string, difficulty?: ArcaeaDifficulty, withSongInfo?: boolean): Promise<{ account_info: BotArcApiUserinfoV5, record: BotArcApiScore, songinfo: BotArcApiSonginfoV5[] }>
-    public best(usercode: string, songname: string, difficulty?: ArcaeaDifficulty, withSongInfo?: boolean): Promise<{ account_info: BotArcApiUserinfoV5, record: BotArcApiScore, songinfo: BotArcApiSonginfoV5[] }>
-    public best(usercode: string, fuzzy: boolean | string, songname?: string | ArcaeaDifficulty, difficulty?: boolean | ArcaeaDifficulty, withSongInfo?: boolean): Promise<{ account_info: BotArcApiUserinfoV5, record: BotArcApiScore, songinfo: BotArcApiSonginfoV5[] }> {
+    public best(user: string, fuzzy: true, songname: string, difficulty?: ArcaeaDifficulty, withSongInfo?: boolean): Promise<BotArcApiContentV5.User.Best>
+    public best(usercode: string, fuzzy: false, songname: string, difficulty?: ArcaeaDifficulty, withSongInfo?: boolean): Promise<BotArcApiContentV5.User.Best>
+    public best(usercode: string, songname: string, difficulty?: ArcaeaDifficulty, withSongInfo?: boolean): Promise<BotArcApiContentV5.User.Best>
+    public best(usercode: string, fuzzy: boolean | string, songname?: string | ArcaeaDifficulty, difficulty?: boolean | ArcaeaDifficulty, withSongInfo?: boolean): Promise<BotArcApiContentV5.User.Best> {
         const axiosInstance = this.axios
         let params: Record<string, any> = {}
         if (typeof fuzzy === "boolean") {
@@ -76,13 +73,13 @@ class BotArcApiV5User {
             params.difficulty = (typeof songname === "number" && songname >= 0 && songname <= 3) ? songname : 2
             if (difficulty) params.withsonginfo = true
         }
-        return new Promise<{ account_info: BotArcApiUserinfoV5, record: BotArcApiScore, songinfo: BotArcApiSonginfoV5[] }>((resolve, reject) => {
+        return new Promise<BotArcApiContentV5.User.Best>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
                 url: "/user/best",
                 params
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<{ account_info: BotArcApiUserinfoV5, record: BotArcApiScore, songinfo: BotArcApiSonginfoV5[] }>
+                const data = response.data as BotArcApiResponseV4<BotArcApiContentV5.User.Best>
                 if (data.status === 0 && data.content) resolve(data.content)
                 else reject(data.message || "undefined error occurred")
             }).catch(reject)
@@ -92,23 +89,23 @@ class BotArcApiV5User {
     /**
      * Get user's 30 best scores.
      */
-    public best30(user: string, fuzzy: true, withSongInfo?: boolean, overflow?: number): Promise<BotArcApiUserbest30 & { account_info: BotArcApiUserinfoV5, best30_songinfo: BotArcApiSonginfoV5[], best30_overflow_songinfo: BotArcApiSonginfoV5[] }>
-    public best30(usercode: string, fuzzy: false, withSongInfo?: boolean, overflow?: number): Promise<BotArcApiUserbest30 & { account_info: BotArcApiUserinfoV5, best30_songinfo: BotArcApiSonginfoV5[], best30_overflow_songinfo: BotArcApiSonginfoV5[] }>
-    public best30(usercode: string): Promise<BotArcApiUserbest30 & { account_info: BotArcApiUserinfoV5, best30_songinfo: BotArcApiSonginfoV5[], best30_overflow_songinfo: BotArcApiSonginfoV5[] }>
-    public best30(usercode: string, fuzzy?: boolean, withSongInfo?: boolean, overflow?: number): Promise<BotArcApiUserbest30 & { account_info: BotArcApiUserinfoV5, best30_songinfo: BotArcApiSonginfoV5[], best30_overflow_songinfo: BotArcApiSonginfoV5[] }> {
+    public best30(user: string, fuzzy: true, withSongInfo?: boolean, overflow?: number): Promise<BotArcApiContentV5.User.Best30>
+    public best30(usercode: string, fuzzy: false, withSongInfo?: boolean, overflow?: number): Promise<BotArcApiContentV5.User.Best30>
+    public best30(usercode: string): Promise<BotArcApiContentV5.User.Best30>
+    public best30(usercode: string, fuzzy?: boolean, withSongInfo?: boolean, overflow?: number): Promise<BotArcApiContentV5.User.Best30> {
         const axiosInstance = this.axios
         let params: Record<string, any> = {}
         if (fuzzy) params.user = usercode
         else params.usercode = usercode
         if (withSongInfo) params.withsonginfo = true
         if (overflow) params.overflow = overflow
-        return new Promise<BotArcApiUserbest30 & { account_info: BotArcApiUserinfoV5, best30_songinfo: BotArcApiSonginfoV5[], best30_overflow_songinfo: BotArcApiSonginfoV5[] }>((resolve, reject) => {
+        return new Promise<BotArcApiContentV5.User.Best30>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
                 url: "/user/best30",
                 params
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<BotArcApiUserbest30 & { account_info: BotArcApiUserinfoV5, best30_songinfo: BotArcApiSonginfoV5[], best30_overflow_songinfo: BotArcApiSonginfoV5[] }>
+                const data = response.data as BotArcApiResponseV4<BotArcApiContentV5.User.Best30>
                 if (data.status === 0 && data.content) resolve(data.content)
                 else reject(data.message || "undefined error occurred")
             }).catch(reject)
@@ -123,17 +120,17 @@ class BotArcApiV5Song {
         this.axios = axios
     }
 
-    public info(songname: string, fuzzy: true): Promise<BotArcApiSonginfoV5>
-    public info(songid: string, fuzzy: false): Promise<BotArcApiSonginfoV5>
-    public info(str: string, fuzzy: boolean = true): Promise<BotArcApiSonginfoV5> {
+    public info(songname: string, fuzzy: true): Promise<BotArcApiDifficultyInfoV5[]>
+    public info(songid: string, fuzzy: false): Promise<BotArcApiDifficultyInfoV5[]>
+    public info(str: string, fuzzy: boolean = true): Promise<BotArcApiDifficultyInfoV5[]> {
         const axiosInstance = this.axios
-        return new Promise<BotArcApiSonginfoV5>((resolve, reject) => {
+        return new Promise<BotArcApiDifficultyInfoV5[]>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
                 url: "/song/info",
                 params: fuzzy ? { songname: str } : { songid: str }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<BotArcApiSonginfoV5>
+                const data = response.data as BotArcApiResponseV4<BotArcApiDifficultyInfoV5[]>
                 if (data.status === 0 && data.content) resolve(data.content)
                 else {
                     reject(data.message || "undefined error occurred")
@@ -142,17 +139,17 @@ class BotArcApiV5Song {
         })
     }
 
-    public alias(songname: string, fuzzy: true): Promise<{ alias: Array<string> }>
-    public alias(songid: string, fuzzy: false): Promise<{ alias: Array<string> }>
-    public alias(str: string, fuzzy: boolean = true): Promise<{ alias: Array<string> }> {
+    public alias(songname: string, fuzzy: true): Promise<string[]>
+    public alias(songid: string, fuzzy: false): Promise<string[]>
+    public alias(str: string, fuzzy: boolean = true): Promise<string[]> {
         const axiosInstance = this.axios
-        return new Promise<{ alias: Array<string> }>((resolve, reject) => {
+        return new Promise<string[]>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
                 url: "/song/alias",
                 params: fuzzy ? { songname: str } : { songid: str }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<{ alias: Array<string> }>
+                const data = response.data as BotArcApiResponseV4<string[]>
                 if (data.status === 0 && data.content) resolve(data.content)
                 else {
                     reject(data.message || "undefined error occurred")
@@ -161,23 +158,23 @@ class BotArcApiV5Song {
         })
     }
 
-    public random(withSongInfo?: boolean): Promise<BotArcApiRandomSong>
-    public random(start?: BotArcApiDifficultyRange, withSongInfo?: boolean): Promise<BotArcApiRandomSong>
-    public random(start?: BotArcApiDifficultyRange, end?: BotArcApiDifficultyRange): Promise<BotArcApiRandomSong>
-    public random(start?: BotArcApiDifficultyRange, end?: BotArcApiDifficultyRange, withSongInfo?: boolean): Promise<BotArcApiRandomSong>
-    public random(start?: BotArcApiDifficultyRange | boolean, end?: BotArcApiDifficultyRange | boolean, withSongInfo?: boolean): Promise<BotArcApiRandomSong> {
+    public random(withSongInfo?: boolean): Promise<BotArcApiContentV5.Song.Random>
+    public random(start?: BotArcApiDifficultyRange, withSongInfo?: boolean): Promise<BotArcApiContentV5.Song.Random>
+    public random(start?: BotArcApiDifficultyRange, end?: BotArcApiDifficultyRange): Promise<BotArcApiContentV5.Song.Random>
+    public random(start?: BotArcApiDifficultyRange, end?: BotArcApiDifficultyRange, withSongInfo?: boolean): Promise<BotArcApiContentV5.Song.Random>
+    public random(start?: BotArcApiDifficultyRange | boolean, end?: BotArcApiDifficultyRange | boolean, withSongInfo?: boolean): Promise<BotArcApiContentV5.Song.Random> {
         const axiosInstance = this.axios
         const params: Record<string, any> = {}
         if ((typeof start === 'boolean' && start) || (typeof end === 'boolean' && end) || withSongInfo) params.withsonginfo = true
         if (typeof start === 'string') params.start = start
         if (typeof end === 'string') params.end = end
-        return new Promise<BotArcApiRandomSong>((resolve, reject) => {
+        return new Promise<BotArcApiContentV5.Song.Random>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
                 url: "/song/random",
                 params
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<BotArcApiRandomSong>
+                const data = response.data as BotArcApiResponseV4<BotArcApiContentV5.Song.Random>
                 if (data.status === 0 && data.content) resolve(data.content)
                 else {
                     reject(data.message || "undefined error occurred")
@@ -285,6 +282,7 @@ export class BotArcApiV5 {
 
     /**
      * The code in https://lowest.world/
+     * @deprecated
      */
     public connect(): Promise<string> {
         return new Promise<string>((resolve, reject) => {

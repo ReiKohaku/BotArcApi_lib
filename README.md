@@ -1,12 +1,23 @@
 # BotArcApi Lib
 
+[中文](./README_ZH.md)
+
 A lib for **[BotArcApi](https://github.com/TheSnowfield/BotArcAPI)** with **Typescript**.
+
+***Migration (for botarcapi_lib@1.1.4 or earlier users)***: Since 2022.4.28 BotArcAPI (now known as Arcaea Unlimited API) has changed its songinfo format. You can read [Type Definition](./src/types.ts) for more info.
 
 ## Install
 
 Install this package is very easy.
+
+Use npm:
 ```
 npm i botarcapi_lib
+```
+
+Or use yarn:
+```
+yarn add botarcapi_lib
 ```
 
 ## Usage
