@@ -189,6 +189,7 @@ export interface BotArcApiRandomSong {
     songinfo: BotArcApiDifficultyInfoV5[]
 }
 
+// Since botarcapi_lib@1.1.5
 export namespace BotArcApiContentV5 {
     export namespace User {
         export interface Info {
