@@ -21,17 +21,39 @@ class BotArcApiV5User {
      */
     
     /**
-     * @typedef {Object} info - Search and return user info.
-     * @param {string} [user] - Arcaea Friend ID or username
-     * @param {string} [usercode] - Arcaea Friend ID 
-     * @param {boolean} [fuzzy=null] - Should query be username as well as friend ID? null or false means "no and only friend ID".
-     * @param {number|boolean} recent - How many recent scores should the API includes? If null, false or 0, then no recent.
+     * @function info - Search and return user info.
+     * @param {string} user - Arcaea Friend ID or username.
+     * @param {boolean} [fuzzy=true] - Should query be username as well as friend ID? null or false means "no and only friend ID".
+     * @param {boolean | BotArcApiRecent | number} [recent] - How many recent scores should the API includes? If null, false or 0, then no recent.
      * @param {boolean} [withSongInfo=false] - Returns Songinfos if true (Only available if fuzzy is true and BotArcApiRecent is higher than 0)
      * @returns {Promise<BotArcApiContentV5.User.Info>} - Returns the info
      */
     public info(user: string, fuzzy: true, recent?: BotArcApiRecent, withSongInfo?: boolean): Promise<BotArcApiContentV5.User.Info>
+    /**
+     * @function info - Search and return user info.
+     * @param {string} usercode - Arcaea Friend ID 
+     * @param {boolean} [fuzzy=false] - Should query be username as well as friend ID? null or false means "no and only friend ID".
+     * @param {boolean | BotArcApiRecent | number} [recent] - How many recent scores should the API includes? If null, false or 0, then no recent.
+     * @param {boolean} [withSongInfo=false] - Returns Songinfos if true (Only available if fuzzy is true and BotArcApiRecent is higher than 0)
+     * @returns {Promise<BotArcApiContentV5.User.Info>} - Returns the info
+     */
     public info(usercode: string, fuzzy: false, recent?: BotArcApiRecent, withSongInfo?: boolean): Promise<BotArcApiContentV5.User.Info>
+    /**
+     * @function info - Search and return user info.
+     * @param {string} usercode - Arcaea Friend ID 
+     * @param {boolean | BotArcApiRecent | number} [recent] - How many recent scores should the API includes? If null, false or 0, then no recent.
+     * @param {boolean} [withSongInfo=false] - Returns Songinfos if true (Only available if fuzzy is true and BotArcApiRecent is higher than 0)
+     * @returns {Promise<BotArcApiContentV5.User.Info>} - Returns the info
+     */
     public info(usercode: string, recent?: BotArcApiRecent, withSongInfo?: boolean): Promise<BotArcApiContentV5.User.Info>
+    /**
+     * @function info - Search and return user info.
+     * @param {string} usercode - Arcaea Friend ID 
+     * @param {boolean} [fuzzy] - Should query be username as well as friend ID? null or false means "no and only friend ID".
+     * @param {boolean | BotArcApiRecent | number } [recent] - How many recent scores should the API includes? If null, false or 0, then no recent.
+     * @param {boolean} [withSongInfo=false] - Returns Songinfos if true (Only available if fuzzy is true and BotArcApiRecent is higher than 0)
+     * @returns {Promise<BotArcApiContentV5.User.Info>} - Returns the info
+     */
     public info(usercode: string, fuzzy?: boolean | BotArcApiRecent, recent?: boolean | BotArcApiRecent, withSongInfo?: boolean): Promise<BotArcApiContentV5.User.Info> {
         const axiosInstance = this.axios;
         let params: Record<string, any> = {};
