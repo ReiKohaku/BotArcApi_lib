@@ -519,7 +519,7 @@ export class BotArcApiV4 {
     public batch(
         calls: string | Array<BotArcApiBatchRequest>
     ): Promise<Array<BotArcApiBatchResponse<unknown>>> {
-        const _calls = typeof calls === "string" ? JSON.parse(calls) : calls
+        const _calls = typeof calls === "string" ? JSON.parse(calls) : calls;
         return new Promise<Array<BotArcApiBatchResponse<unknown>>>((resolve, reject) => {
             this.axios({
                 method: "POST",
@@ -528,11 +528,11 @@ export class BotArcApiV4 {
                     calls: JSON.stringify(_calls)
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<Array<BotArcApiBatchResponse<unknown>>>
-                if (data.status === 0 && data.content) resolve(data.content)
-                else reject(data.message || "undefined error occurred")
-            }).catch(reject)
-        })
+                const data = response.data as BotArcApiResponseV4<Array<BotArcApiBatchResponse<unknown>>>;
+                if (data.status === 0 && data.content) resolve(data.content);
+                else reject(data.message || "undefined error occurred");
+            }).catch(reject);
+        });
     }
 
     /**
@@ -544,11 +544,11 @@ export class BotArcApiV4 {
                 method: "GET",
                 url: "v4/connect"
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<{key: string}>
-                if (data.status === 0 && data.content) resolve(data.content)
-                else reject(data.message || "undefined error occurred")
-            })
-        })
+                const data = response.data as BotArcApiResponseV4<{key: string}>;
+                if (data.status === 0 && data.content) resolve(data.content);
+                else reject(data.message || "undefined error occurred");
+            });
+        });
     }
 
     /**
@@ -560,10 +560,10 @@ export class BotArcApiV4 {
                 method: "GET",
                 url: "v4/update"
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<{url: string, version: string}>
-                if (data.status === 0 && data.content) resolve(data.content)
-                else reject(data.message || "undefined error occurred")
-            })
-        })
+                const data = response.data as BotArcApiResponseV4<{url: string, version: string}>;
+                if (data.status === 0 && data.content) resolve(data.content);
+                else reject(data.message || "undefined error occurred");
+            });
+        });
     }
 }
