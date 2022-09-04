@@ -1,4 +1,4 @@
-import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios"
+import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
 import {
     ArcaeaDifficulty,
     BotArcApiUserinfoV4,
@@ -10,13 +10,13 @@ import {
     BotArcApiBatchResponse,
     BotArcApiRatingInfo,
     BotArcApiRecent
-} from "../types"
+} from "../types";
 
 class BotArcApiV4User {
-    private readonly axios: AxiosInstance
+    private readonly axios: AxiosInstance;
 
     constructor(axios: AxiosInstance) {
-        this.axios = axios
+        this.axios = axios;
     }
 
     /**
@@ -27,17 +27,17 @@ class BotArcApiV4User {
     public info(usercode: string, fuzzy: false, recent?: BotArcApiRecent): Promise<BotArcApiUserinfoV4>
     public info(usercode: string, recent?: BotArcApiRecent): Promise<BotArcApiUserinfoV4>
     public info(usercode: string, fuzzy?: boolean | BotArcApiRecent, recent?: BotArcApiRecent): Promise<BotArcApiUserinfoV4> {
-        const axiosInstance = this.axios
-        let params: Record<string, any> = {}
+        const axiosInstance = this.axios;
+        let params: Record<string, any> = {};
         if (typeof fuzzy === "boolean") {
-            if (fuzzy) params.user = usercode
-            else params.usercode = usercode
-            const _recent = (typeof recent === "number" && recent >= 0 && recent <= 7) ? recent : 0
-            if (_recent && _recent > 0) params.recent = _recent
+            if (fuzzy) params.user = usercode;
+            else params.usercode = usercode;
+            const _recent = (typeof recent === "number" && recent >= 0 && recent <= 7) ? recent : 0;
+            if (_recent && _recent > 0) params.recent = _recent;
         } else {
-            params.usercode = usercode
-            const _recent = (typeof fuzzy === "number" && fuzzy >= 0 && fuzzy <= 7) ? fuzzy : 0
-            if (_recent && _recent > 0) params.recent = _recent
+            params.usercode = usercode;
+            const _recent = (typeof fuzzy === "number" && fuzzy >= 0 && fuzzy <= 7) ? fuzzy : 0;
+            if (_recent && _recent > 0) params.recent = _recent;
         }
         return new Promise<BotArcApiUserinfoV4>((resolve, reject) => {
             axiosInstance({
@@ -45,13 +45,13 @@ class BotArcApiV4User {
                 url: "/v4/user/info",
                 params: params
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<BotArcApiUserinfoV4>
-                if (data.status === 0 && data.content) resolve(data.content)
+                const data = response.data as BotArcApiResponseV4<BotArcApiUserinfoV4>;
+                if (data.status === 0 && data.content) resolve(data.content);
                 else {
-                    reject(data.message || "undefined error occurred")
+                    reject(data.message || "undefined error occurred");
                 }
-            }).catch(reject)
-        })
+            }).catch(reject);
+        });
     }
 
     /**
@@ -61,17 +61,17 @@ class BotArcApiV4User {
     public best(usercode: string, fuzzy: false, songname: string, difficulty?: ArcaeaDifficulty): Promise<BotArcApiScore>
     public best(usercode: string, songname: string, difficulty?: ArcaeaDifficulty): Promise<BotArcApiScore>
     public best(usercode: string, fuzzy: boolean | string, songname?: string | ArcaeaDifficulty, difficulty?: ArcaeaDifficulty): Promise<BotArcApiScore> {
-        const axiosInstance = this.axios
-        let params: Record<string, any> = {}
+        const axiosInstance = this.axios;
+        let params: Record<string, any> = {};
         if (typeof fuzzy === "boolean") {
-            if (fuzzy) params.user = usercode
-            else params.usercode = usercode
-            params.songname = songname
-            params.difficulty = (typeof difficulty === "number" && difficulty >= 0 && difficulty <= 3) ? difficulty : 2
+            if (fuzzy) params.user = usercode;
+            else params.usercode = usercode;
+            params.songname = songname;
+            params.difficulty = (typeof difficulty === "number" && difficulty >= 0 && difficulty <= 3) ? difficulty : 2;
         } else {
-            params.usercode = usercode
-            params.songname = fuzzy
-            params.difficulty = (typeof songname === "number" && songname >= 0 && songname <= 3) ? songname : 2
+            params.usercode = usercode;
+            params.songname = fuzzy;
+            params.difficulty = (typeof songname === "number" && songname >= 0 && songname <= 3) ? songname : 2;
         }
         return new Promise<BotArcApiScore>((resolve, reject) => {
             axiosInstance({
@@ -79,11 +79,11 @@ class BotArcApiV4User {
                 url: "v4/user/best",
                 params
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<BotArcApiScore>
-                if (data.status === 0 && data.content) resolve(data.content)
-                else reject(data.message || "undefined error occurred")
-            }).catch(reject)
-        })
+                const data = response.data as BotArcApiResponseV4<BotArcApiScore>;
+                if (data.status === 0 && data.content) resolve(data.content);
+                else reject(data.message || "undefined error occurred");
+            }).catch(reject);
+        });
     }
 
     /**
@@ -93,33 +93,33 @@ class BotArcApiV4User {
     public best30(usercode: string, fuzzy: false): Promise<BotArcApiUserbest30>
     public best30(usercode: string): Promise<BotArcApiUserbest30>
     public best30(usercode: string, fuzzy?: boolean): Promise<BotArcApiUserbest30> {
-        const axiosInstance = this.axios
-        let params: Record<string, any> = {}
-        if (fuzzy) params.user = usercode
-        else params.usercode = usercode
+        const axiosInstance = this.axios;
+        let params: Record<string, any> = {};
+        if (fuzzy) params.user = usercode;
+        else params.usercode = usercode;
         return new Promise<BotArcApiUserbest30>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
                 url: "v4/user/best30",
                 params
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<BotArcApiUserbest30>
-                if (data.status === 0 && data.content) resolve(data.content)
-                else reject(data.message || "undefined error occurred")
-            }).catch(reject)
-        })
+                const data = response.data as BotArcApiResponseV4<BotArcApiUserbest30>;
+                if (data.status === 0 && data.content) resolve(data.content);
+                else reject(data.message || "undefined error occurred");
+            }).catch(reject);
+        });
     }
 }
 
 class BotArcApiV4Song {
-    private readonly axios: AxiosInstance
+    private readonly axios: AxiosInstance;
 
     constructor(axios: AxiosInstance) {
-        this.axios = axios
+        this.axios = axios;
     }
 
     public info(songname: string): Promise<BotArcApiSonginfo> {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise<BotArcApiSonginfo>((resolve, reject) => {
             axiosInstance({
                 method: "POST",
@@ -128,13 +128,13 @@ class BotArcApiV4Song {
                     songname
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<BotArcApiSonginfo>
-                if (data.status === 0 && data.content) resolve(data.content)
+                const data = response.data as BotArcApiResponseV4<BotArcApiSonginfo>;
+                if (data.status === 0 && data.content) resolve(data.content);
                 else {
-                    reject(data.message || "undefined error occurred")
+                    reject(data.message || "undefined error occurred");
                 }
-            }).catch(reject)
-        })
+            }).catch(reject);
+        });
     }
 
     public alias(songid: string): Promise<{ alias: Array<string> }> {
