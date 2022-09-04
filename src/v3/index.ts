@@ -81,7 +81,7 @@ export class BotArcApiV3 {
                 return axios.create({
                     baseURL,
                     timeout: timeout || 30000
-                })
+                });
             } else {
                 return axios.create(baseURL);
             }
@@ -95,7 +95,7 @@ export class BotArcApiV3 {
     }
 
     userinfo(usercode: string, recent?: boolean): Promise<BotArcApiUserinfoV4> {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise<BotArcApiUserinfoV4>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
@@ -105,16 +105,16 @@ export class BotArcApiV3 {
                     recent
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as {status: number, content: unknown}
-                if (data.status === 0) resolve(data.content as BotArcApiUserinfoV4)
+                const data = response.data as {status: number, content: unknown};
+                if (data.status === 0) resolve(data.content as BotArcApiUserinfoV4);
                 else {
-                    reject(data.status || "undefined error occurred")
+                    reject(data.status || "undefined error occurred");
                 }
-            }).catch(reject)
-        })
+            }).catch(reject);
+        });
     }
     userbest(usercode: string, songname: string, difficulty: ArcaeaDifficulty): Promise<BotArcApiScore> {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise<BotArcApiScore>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
@@ -125,14 +125,14 @@ export class BotArcApiV3 {
                     difficulty
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as {status: number, content: unknown}
-                if (data.status === 0) resolve(data.content as BotArcApiScore)
-                else reject(data.status || "undefined error occurred")
-            }).catch(reject)
-        })
+                const data = response.data as {status: number, content: unknown};
+                if (data.status === 0) resolve(data.content as BotArcApiScore);
+                else reject(data.status || "undefined error occurred");
+            }).catch(reject);
+        });
     }
     userbest30(usercode: string): Promise<BotArcApiUserbest30> {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise<BotArcApiUserbest30>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
@@ -141,14 +141,14 @@ export class BotArcApiV3 {
                     usercode
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as {status: number, content: unknown}
-                if (data.status === 0) resolve(data.content as BotArcApiUserbest30)
-                else reject(data.status || "undefined error occurred")
-            }).catch(reject)
-        })
+                const data = response.data as {status: number, content: unknown};
+                if (data.status === 0) resolve(data.content as BotArcApiUserbest30);
+                else reject(data.status || "undefined error occurred");
+            }).catch(reject);
+        });
     }
     songinfo(songname: string): Promise<BotArcApiSonginfo> {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise<BotArcApiSonginfo>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
@@ -157,14 +157,14 @@ export class BotArcApiV3 {
                     songname
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse<BotArcApiSonginfo>
-                if (data.status === 0 && data.content) resolve(data.content)
-                else reject(data.status || "undefined error occurred")
-            }).catch(reject)
-        })
+                const data = response.data as BotArcApiResponse<BotArcApiSonginfo>;
+                if (data.status === 0 && data.content) resolve(data.content);
+                else reject(data.status || "undefined error occurred");
+            }).catch(reject);
+        });
     }
     songalias(songname: string): Promise<{id: string}> {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise<{id: string}>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
@@ -173,29 +173,29 @@ export class BotArcApiV3 {
                     songname
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse<{id: string}>
-                if (data.status === 0 && data.content) resolve(data.content)
-                else reject(data.status || "undefined error occurred")
-            }).catch(reject)
-        })
+                const data = response.data as BotArcApiResponse<{id: string}>;
+                if (data.status === 0 && data.content) resolve(data.content);
+                else reject(data.status || "undefined error occurred");
+            }).catch(reject);
+        });
     }
     update(): Promise<{url: string, version: string}> {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise<{url: string, version: string}>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
                 url: "v3/update"
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse<{url: string, version: string}>
-                if (data.status === 0 && data.content) resolve(data.content)
-                else reject(data.status || "undefined error occurred")
-            }).catch(reject)
-        })
+                const data = response.data as BotArcApiResponse<{url: string, version: string}>;
+                if (data.status === 0 && data.content) resolve(data.content);
+                else reject(data.status || "undefined error occurred");
+            }).catch(reject);
+        });
     }
     random(start?: number, end?: number, info?: true): Promise<{id: string, ratingClass: ArcaeaDifficulty, song_info: BotArcApiSonginfo}>
     random(start?: number, end?: number, info?: false): Promise<{id: string, ratingClass: ArcaeaDifficulty}>
     random(start?: number, end?: number, info?: boolean): Promise<{id: string, ratingClass: ArcaeaDifficulty, song_info?: BotArcApiSonginfo}> {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise<{id: string, ratingClass: ArcaeaDifficulty, song_info?: BotArcApiSonginfo}>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
@@ -206,26 +206,26 @@ export class BotArcApiV3 {
                     info
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse<{id: string, ratingClass: ArcaeaDifficulty, song_info?: BotArcApiSonginfo}>
+                const data = response.data as BotArcApiResponse<{id: string, ratingClass: ArcaeaDifficulty, song_info?: BotArcApiSonginfo}>;
                 if (data.status === 0 && data.content) {
-                    if (info) resolve(data.content as {id: string, ratingClass: ArcaeaDifficulty, song_info: BotArcApiSonginfo})
-                    else resolve(data.content as {id: string, ratingClass: ArcaeaDifficulty})
+                    if (info) resolve(data.content as {id: string, ratingClass: ArcaeaDifficulty, song_info: BotArcApiSonginfo});
+                    else resolve(data.content as {id: string, ratingClass: ArcaeaDifficulty});
                 }
-                else reject(data.status || "undefined error occurred")
-            }).catch(reject)
-        })
+                else reject(data.status || "undefined error occurred");
+            }).catch(reject);
+        });
     }
     connect(): Promise<{key: string}> {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise<{key: string}>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
                 url: "v3/connect"
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse<{key: string}>
-                if (data.status === 0 && data.content) resolve(data.content)
-                else reject(data.status || "undefined error occurred")
-            }).catch(reject)
-        })
+                const data = response.data as BotArcApiResponse<{key: string}>;
+                if (data.status === 0 && data.content) resolve(data.content);
+                else reject(data.status || "undefined error occurred");
+            }).catch(reject);
+        });
     }
 }
