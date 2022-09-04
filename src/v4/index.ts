@@ -138,7 +138,7 @@ class BotArcApiV4Song {
     }
 
     public alias(songid: string): Promise<{ alias: Array<string> }> {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise<{ alias: Array<string> }>((resolve, reject) => {
             axiosInstance({
                 method: "POST",
@@ -147,17 +147,17 @@ class BotArcApiV4Song {
                     songid
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<{ alias: Array<string> }>
-                if (data.status === 0 && data.content) resolve(data.content)
+                const data = response.data as BotArcApiResponseV4<{ alias: Array<string> }>;
+                if (data.status === 0 && data.content) resolve(data.content);
                 else {
-                    reject(data.message || "undefined error occurred")
+                    reject(data.message || "undefined error occurred");
                 }
-            }).catch(reject)
-        })
+            }).catch(reject);
+        });
     }
 
     public id(songname: string): Promise<{ id: string }> {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise<{id: string}>((resolve, reject) => {
             axiosInstance({
                 method: "POST",
@@ -166,20 +166,20 @@ class BotArcApiV4Song {
                     songname
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<{ id: string }>
-                if (data.status === 0 && data.content) resolve(data.content)
+                const data = response.data as BotArcApiResponseV4<{ id: string }>;
+                if (data.status === 0 && data.content) resolve(data.content);
                 else {
-                    reject(data.message || "undefined error occurred")
+                    reject(data.message || "undefined error occurred");
                 }
-            }).catch(reject)
-        })
+            }).catch(reject);
+        });
     }
 
     /**
      * Roll a song from a given difficulty range.
      */
     public random(start?: number, end?: number): Promise<{ id: string, rating_class: number }> {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise<{ id: string, rating_class: number }>((resolve, reject) => {
             axiosInstance({
                 method: "POST",
@@ -189,17 +189,17 @@ class BotArcApiV4Song {
                     end
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<{ id: string, rating_class: number }>
-                if (data.status === 0 && data.content) resolve(data.content)
+                const data = response.data as BotArcApiResponseV4<{ id: string, rating_class: number }>;
+                if (data.status === 0 && data.content) resolve(data.content);
                 else {
-                    reject(data.message || "undefined error occurred")
+                    reject(data.message || "undefined error occurred");
                 }
-            }).catch(reject)
-        })
+            }).catch(reject);
+        });
     }
 
     public rating(start: number, end?: number): Promise<{ rating: Array<BotArcApiRatingInfo> }> {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise<{ rating: Array<BotArcApiRatingInfo> }>((resolve, reject) => {
             axiosInstance({
                 method: "POST",
@@ -209,13 +209,13 @@ class BotArcApiV4Song {
                     end
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponseV4<{ rating: Array<BotArcApiRatingInfo> }>
-                if (data.status === 0 && data.content) resolve(data.content)
+                const data = response.data as BotArcApiResponseV4<{ rating: Array<BotArcApiRatingInfo> }>;
+                if (data.status === 0 && data.content) resolve(data.content);
                 else {
-                    reject(data.message || "undefined error occurred")
+                    reject(data.message || "undefined error occurred");
                 }
-            }).catch(reject)
-        })
+            }).catch(reject);
+        });
     }
 }
 
