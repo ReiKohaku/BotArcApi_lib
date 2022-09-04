@@ -1,6 +1,6 @@
 {
   "name": "botarcapi_lib",
-  "version": "1.1.5",
+  "version": "1.1.9",
   "description": "Lib for BotArcApi",
   "private": false,
   "main": "build/index.js",
