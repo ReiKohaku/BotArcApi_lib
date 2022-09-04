@@ -1,6 +1,6 @@
 # BotArcApi Lib
 
-[中文](./README_ZH.md)
+**English** | [中文](./README_ZH.md)
 
 A lib for **[BotArcApi](https://github.com/TheSnowfield/BotArcAPI)** with **Typescript**.
 
