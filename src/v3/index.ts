@@ -1,4 +1,4 @@
-import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios"
+import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
 import {
     ArcaeaDifficulty,
     BotArcApiResponse,
@@ -9,14 +9,14 @@ import {
 } from "../types";
 
 class BotArcApiV3Arc {
-    private readonly axios: AxiosInstance
+    private readonly axios: AxiosInstance;
 
     constructor(axios: AxiosInstance) {
-        this.axios = axios
+        this.axios = axios;
     }
 
     public alloc(time?: number, clear?: boolean): Promise<{access_token: string, valid_time: number}> {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise<{access_token: string, valid_time: number}>((resolve, reject) => {
             axiosInstance({
                 method: "GET",
@@ -26,15 +26,15 @@ class BotArcApiV3Arc {
                     clear
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse<{access_token: string, valid_time: number}>
-                if (data.status === 0 && data.content) resolve(data.content)
-                else reject(data.status || "undefined error occurred")
-            }).catch(reject)
-        })
+                const data = response.data as BotArcApiResponse<{access_token: string, valid_time: number}>;
+                if (data.status === 0 && data.content) resolve(data.content);
+                else reject(data.status || "undefined error occurred");
+            }).catch(reject);
+        });
     }
 
     public forward(token: string, method: "GET" | "get" | "POST" | "post", url: string, params: Record<string, any>) {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise((resolve, reject) => {
             axiosInstance({
                 method,
@@ -44,15 +44,15 @@ class BotArcApiV3Arc {
                     "Authorization": "Bearer " + token
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse<unknown>
-                if (data.status === 0 && data.content) resolve(data.content)
-                else reject(data.status || "undefined error occurred")
-            }).catch(reject)
-        })
+                const data = response.data as BotArcApiResponse<unknown>;
+                if (data.status === 0 && data.content) resolve(data.content);
+                else reject(data.status || "undefined error occurred");
+            }).catch(reject);
+        });
     }
 
     public recycle(token: string) {
-        const axiosInstance = this.axios
+        const axiosInstance = this.axios;
         return new Promise((resolve, reject) => {
             axiosInstance({
                 method: "GET",
@@ -61,17 +61,17 @@ class BotArcApiV3Arc {
                     token
                 }
             }).then((response: AxiosResponse) => {
-                const data = response.data as BotArcApiResponse<void>
-                if (data.status === 0) resolve(void 0)
-                else reject(data.status || "undefined error occurred")
-            }).catch(reject)
-        })
+                const data = response.data as BotArcApiResponse<void>;
+                if (data.status === 0) resolve(void 0);
+                else reject(data.status || "undefined error occurred");
+            }).catch(reject);
+        });
     }
 }
 
 export class BotArcApiV3 {
-    private readonly axios: AxiosInstance
-    public readonly arc: BotArcApiV3Arc
+    private readonly axios: AxiosInstance;
+    public readonly arc: BotArcApiV3Arc;
 
     constructor(axiosConfig?: AxiosRequestConfig)
     constructor(baseURL?: string, timeout?: number)
@@ -83,15 +83,15 @@ export class BotArcApiV3 {
                     timeout: timeout || 30000
                 })
             } else {
-                return axios.create(baseURL)
+                return axios.create(baseURL);
             }
         }
-        const axiosInstance = createAxiosInstance()
-        this.axios = axiosInstance
+        const axiosInstance = createAxiosInstance();
+        this.axios = axiosInstance;
 
-        this.arc = new BotArcApiV3Arc(axiosInstance)
+        this.arc = new BotArcApiV3Arc(axiosInstance);
 
-        return this
+        return this;
     }
 
     userinfo(usercode: string, recent?: boolean): Promise<BotArcApiUserinfoV4> {
