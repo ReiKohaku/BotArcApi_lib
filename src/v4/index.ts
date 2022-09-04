@@ -305,9 +305,9 @@ class BotArcApiV4Forward {
     }
 }
 
-export type BotArcApiScoreWithSongInfo = BotArcApiScore & { songInfo: BotArcApiSonginfo }
-export type BotArcApiUserInfoV4WithSongInfo = BotArcApiUserinfoV4 & { recent_score?: Array<BotArcApiScoreWithSongInfo> }
-export type BotArcApiUserBest30WithSongInfo = BotArcApiUserbest30 & { best30_list: Array<BotArcApiScoreWithSongInfo> }
+export type BotArcApiScoreWithSongInfo = BotArcApiScore & { songInfo: BotArcApiSonginfo };
+export type BotArcApiUserInfoV4WithSongInfo = BotArcApiUserinfoV4 & { recent_score?: Array<BotArcApiScoreWithSongInfo> };
+export type BotArcApiUserBest30WithSongInfo = BotArcApiUserbest30 & { best30_list: Array<BotArcApiScoreWithSongInfo> };
 
 class BotArcApiV4Util {
     private readonly axios: AxiosInstance;
