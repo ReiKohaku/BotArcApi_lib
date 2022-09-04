@@ -31,32 +31,32 @@ Follow the steps below:
 
 2. Make sure you deploy the domain name of **BotArcApi**, such as `http://localhost:8088`.
 
-3. Choose a **BotArcApi** version you like, such as `v4`, then input codes below in your project:
+3. Choose a **BotArcApi** version you like, such as `v5`, then input codes below in your project:
    ```typescript
-   import BotArcApi from "botarcapi_lib"
-   const { BotArcApiV4 } = BotArcApi
-   const api = new BotArcApiV4("http://localhost:8088", 60000)
+   import BotArcApi from "botarcapi_lib";
+   const { BotArcApiV5 } = BotArcApi;
+   const api = new BotArcApiV5("http://localhost:8088", 60000);
    ```
    
    ...or maybe you are using **Node.js**:
    
    ```javascript
-   const { BotArcApiV4 } = require("botarcapi_lib");
-   const api = new BotArcApiV4("http://localhost:8088", 60000)
+   const { BotArcApiV5 } = require("botarcapi_lib");
+   const api = new BotArcApiV5("http://localhost:8088", 60000);
    ```
    
    Otherwise, maybe you want to control other request config, so you can provide `AxiosRequestConfig`:
 
    ```typescript
-   import BotArcApi from "botarcapi_lib"
-   const { BotArcApiV4 } = BotArcApi
+   import BotArcApi from "botarcapi_lib";
+   const { BotArcApiV5 } = BotArcApi;
    const api = new BotArcApiV4({
        baseURL: "http://localhost:8088",
        timeout: 60000,
        headers: {
-           "User-Agent": "SecretAPIUA"
+           "Authorization": "Bearer SecretAPItoken"
        }
-   })
+   });
    ```
 
 4. Use APIs you like.
@@ -66,38 +66,58 @@ Follow the steps below:
 For example, you want to check the best 30 of **Nagiha0798** and print result to console, you can:
 
 ```typescript
-import BotArcApi from "botarcapi_lib"
-const { BotArcApiV4 } = BotArcApi
+import BotArcApi from "botarcapi_lib";
+const { BotArcApiV4 } = BotArcApi;
 const api = new BotArcApiV4({
     baseURL: "http://localhost:8088",
     timeout: 60000,
     headers: {
-        "User-Agent": "SecretAPIUA"
+        "Authorization": "Bearer SecretAPItoken"
     }
-})
+});
 api.user.best30("Nagiha0798", true)
     .then(console.log)
-    .catch(console.error)
+    .catch(console.error);
 ```
 
 ...or you may like using **async/await**:
 
 ```typescript
-import BotArcApi from "botarcapi_lib"
-const { BotArcApiV4 } = BotArcApi
+import BotArcApi from "botarcapi_lib";
+const { BotArcApiV4 } = BotArcApi;
+const api = new BotArcApiV4({
+    baseURL: "http://localhost:8088",
+    timeout: 60000,
+    headers: {
+        "Authorization": "Bearer SecretAPItoken"
+    }
+});
+
+async function b30() {
+    console.log(await api.user.best30("Nagiha0798", true));
+}
+
+b30();
+```
+
+...or you have an older version of **ArcUnlimitedAPI** or **BotArcAPI** and/or use ˋUser-Agentˋ instead of ˋtokenˋ:
+
+```typescript
+import BotArcApi from "botarcapi_lib";
+const { BotArcApiV4 } = BotArcApi;
 const api = new BotArcApiV4({
     baseURL: "http://localhost:8088",
     timeout: 60000,
     headers: {
         "User-Agent": "SecretAPIUA"
     }
-})
+});
 
 async function b30() {
-    console.log(await api.user.best30("Nagiha0798", true))
+    console.log(await api.user.best30("Nagiha0798", true));
 }
 
-b30()
+b30();
 ```
 
 ### Util
@@ -112,7 +132,7 @@ import {
   difficultyClass2String,
   botArcApiDifficulty2String,
   formatScore
-} from "botarcapi_lib"
+} from "botarcapi_lib";
 ```
 
 Then you may use functions you imported.
@@ -125,7 +145,7 @@ You may know, **BotArcApi Difficulty** is a number which >=2 and <=23. This func
 
 ```typescript
 {
-    rating: number
+    rating: number,
     ratingPlus?: boolean
 }
 ```
@@ -135,9 +155,9 @@ This format is also used in **ArcaeaDifficultyClass**.
 #### Example
 
 ```typescript
-import BotArcApi from "botarcapi_lib"
-const {util} = BotArcApi
-console.log(util.botArcApiDifficulty2DifficultyClass(21))
+import BotArcApi from "botarcapi_lib";
+const {util} = BotArcApi;
+console.log(util.botArcApiDifficulty2DifficultyClass(21));
 // { rating: 10, ratingPlus: true }
 ```
 
@@ -148,23 +168,23 @@ Convert **Difficulty Class** to **string**.
 #### Example
 
 ```typescript
-import BotArcApi from "botarcapi_lib"
-const {util} = BotArcApi
+import BotArcApi from "botarcapi_lib";
+const {util} = BotArcApi;
 console.log(util.difficultyClass2String({
     rating: 10,
     ratingPlus: true
-}))
+}));
 // 10+
 ```
 
 ```typescript
-import BotArcApi from "botarcapi_lib"
-const {BotArcApiv4, util} = BotArcApi
-const api = new BotArcApiv4("http://localhost:3000")
+import BotArcApi from "botarcapi_lib";
+const {BotArcApiv4, util} = BotArcApi;
+const api = new BotArcApiv4("http://localhost:3000");
 api.song.info("gl").then(info => {
     const futureDifficultyClass = info.difficulties.filter(c => c.ratingClass === 2)[0]
     console.log(util.difficultyClass2String(futureDifficultyClass)) // 11
-})
+});
 ```
 
 ### botArcApiDifficulty2String
@@ -174,9 +194,9 @@ Equals to `difficultyClass2String(botArcApiDifficulty2DifficultyClass(/* arg */)
 #### Example
 
 ```typescript
-import BotArcApi from "botarcapi_lib"
-const {util} = BotArcApi
-console.log(util.botArcApiDifficulty2String(21))
+import BotArcApi from "botarcapi_lib";
+const {util} = BotArcApi;
+console.log(util.botArcApiDifficulty2String(21));
 // 10+
 ```
 
@@ -189,10 +209,10 @@ Format score number into Arcaea score display format.
 #### Example
 
 ```typescript
-import BotArcApi from "botarcapi_lib"
-const {util} = BotArcApi
-console.log(util.formatScore(10001540)) // 10'001'540
-console.log(util.formatScore(9993506)) // 09'993'506
-console.log(util.formatScore(12987)) // 00'012'987
+import BotArcApi from "botarcapi_lib";
+const {util} = BotArcApi;
+console.log(util.formatScore(10001540)); // 10'001'540
+console.log(util.formatScore(9993506)); // 09'993'506
+console.log(util.formatScore(12987)); // 00'012'987
 ```
 
